@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WIMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClaimType" Type="nvarchar(max)" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" />
+    <Property Name="User_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" />
+    <Property Name="Discriminator" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="200" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="LS_AxleType">
+    <Key>
+      <PropertyRef Name="AxleTypeID" />
+    </Key>
+    <Property Name="AxleTypeID" Type="int" Nullable="false" />
+    <Property Name="AxleTypeCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Note" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsUsed" Type="bit" />
+  </EntityType>
+  <EntityType Name="LS_CameraConfig">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Bosch_IPAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StationID" Type="int" Nullable="false" />
+    <Property Name="PreTime" Type="int" Nullable="false" />
+    <Property Name="StopTime" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LS_Dataloger">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IP" Type="nvarchar" MaxLength="20" />
+    <Property Name="PORT" Type="int" />
+    <Property Name="TIME_DELTA" Type="int" />
+    <Property Name="USERNAME" Type="nvarchar" MaxLength="20" />
+    <Property Name="PASSWORD" Type="nvarchar" MaxLength="50" />
+    <Property Name="REBOOT_TIME" Type="int" />
+    <Property Name="TIME_WAIT" Type="int" />
+  </EntityType>
+  <EntityType Name="LS_Lane">
+    <Key>
+      <PropertyRef Name="LaneId" />
+    </Key>
+    <Property Name="LaneId" Type="int" Nullable="false" />
+    <Property Name="LaneCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="StationCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Direction" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="LaneType" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IpAddress" Type="nvarchar" MaxLength="20" />
+    <Property Name="IsUsed" Type="bit" Nullable="false" />
+    <Property Name="Note" Type="nvarchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="LS_Report">
+    <Key>
+      <PropertyRef Name="ReportID" />
+    </Key>
+    <Property Name="ReportID" Type="int" Nullable="false" />
+    <Property Name="ReportCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="ReportName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ShortName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Enable" Type="bit" Nullable="false" />
+    <Property Name="Sort" Type="smallint" Nullable="false" />
+    <Property Name="IsReport" Type="bit" />
+  </EntityType>
+  <EntityType Name="LS_Station">
+    <Key>
+      <PropertyRef Name="StationId" />
+    </Key>
+    <Property Name="StationId" Type="int" Nullable="false" />
+    <Property Name="StationCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="StationName" Type="nvarchar" MaxLength="100" />
+    <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
+    <Property Name="CompanyAddress" Type="nvarchar" MaxLength="255" />
+    <Property Name="CompanyPhone" Type="nvarchar" MaxLength="20" />
+    <Property Name="CompanyFax" Type="nvarchar" MaxLength="20" />
+    <Property Name="RootImagePath" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="LS_VehicleType">
+    <Key>
+      <PropertyRef Name="VehicleTypeID" />
+    </Key>
+    <Property Name="VehicleTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VehicleTypeCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="ShortName" Type="nvarchar" MaxLength="200" />
+    <Property Name="Note" Type="nvarchar" MaxLength="500" />
+    <Property Name="IsUsed" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LS_VMS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="IP" Type="nvarchar" MaxLength="20" />
+    <Property Name="PORT" Type="int" />
+    <Property Name="HEIGHT" Type="int" />
+    <Property Name="WIDTH" Type="int" />
+    <Property Name="CHIP_TYPE" Type="int" />
+    <Property Name="FONT" Type="nvarchar" MaxLength="255" />
+    <Property Name="FONT_SIZE" Type="float" />
+    <Property Name="DISTANCE" Type="int" />
+    <Property Name="WIDTH_INDEX" Type="int" />
+    <Property Name="HEADR" Type="nvarchar" MaxLength="255" />
+    <Property Name="HEIGHT_INDEX" Type="int" />
+    <Property Name="DISPLAY_TIME" Type="int" />
+    <Property Name="DISPLAY_LINE" Type="int" />
+    <Property Name="DISPLAY_MODE" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="SUP_DeviceStatus">
+    <Key>
+      <PropertyRef Name="DeviceStatusID" />
+    </Key>
+    <Property Name="DeviceStatusID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="LaneDeviceID" Type="int" Nullable="false" />
+    <Property Name="DeviceCodeType" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="IPAddress" Type="varchar" MaxLength="100" />
+    <Property Name="StationCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="LaneCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Status" Type="smallint" Nullable="false" />
+    <Property Name="ModifyDate" Type="datetime" Nullable="false" />
+    <Property Name="Sequence" Type="int" Nullable="false" />
+    <Property Name="Note" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="SUP_DeviceStatusHistory">
+    <Key>
+      <PropertyRef Name="DeviceStatusHistoryID" />
+    </Key>
+    <Property Name="DeviceStatusHistoryID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DeviceStatusID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="LaneDeviceID" Type="int" />
+    <Property Name="DeviceCodeType" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="IPAddress" Type="varchar" MaxLength="50" />
+    <Property Name="Status" Type="smallint" Nullable="false" />
+    <Property Name="StationCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="LaneCode" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="ModifyDate" Type="datetime" Nullable="false" />
+    <Property Name="Note" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="SUP_DeviceStatusLog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="EmployeeID" Type="int" Nullable="false" />
+    <Property Name="StationID" Type="int" />
+    <Property Name="BeginStatus" Type="int" Nullable="false" />
+    <Property Name="EndStatus" Type="int" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="Reason" Type="int" />
+    <Property Name="Note" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="SYS_ConfigInfo">
+    <Key>
+      <PropertyRef Name="ConfigInfoID" />
+    </Key>
+    <Property Name="ConfigInfoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Key" Type="nvarchar" MaxLength="50" />
+    <Property Name="Value" Type="nvarchar" MaxLength="100" />
+    <Property Name="InfoType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsUsed" Type="bit" />
+  </EntityType>
+  <EntityType Name="Trans_RawAxles">
+    <Key>
+      <PropertyRef Name="AxleId" />
+    </Key>
+    <Property Name="AxleId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="TranId" Type="uniqueidentifier" />
+    <Property Name="VehicleIdFromLogger" Type="int" />
+    <Property Name="AxleGroupId" Type="int" />
+    <Property Name="Velocity" Type="float" />
+    <Property Name="GrossWeight" Type="float" />
+    <Property Name="LeftWeight" Type="float" />
+    <Property Name="RightWeight" Type="float" />
+    <Property Name="LeftRightImbalance" Type="float" />
+    <Property Name="Distance" Type="float" />
+    <Property Name="OverloadStatus" Type="int" />
+    <Property Name="OverloadPercent" Type="float" />
+    <Property Name="LimitWeight" Type="float" />
+  </EntityType>
+  <EntityType Name="Trans_VehicleInfo">
+    <Key>
+      <PropertyRef Name="TranId" />
+    </Key>
+    <Property Name="TranId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="WeightBeginTime" Type="datetime" />
+    <Property Name="WeightEndTime" Type="datetime" />
+    <Property Name="WeightDuration" Type="float" />
+    <Property Name="VehicleIdFromLogger" Type="int" />
+    <Property Name="WeightIdFromLogger" Type="nvarchar" MaxLength="30" />
+    <Property Name="LoggerId" Type="int" />
+    <Property Name="Velocity" Type="float" />
+    <Property Name="VehicleLength" Type="float" />
+    <Property Name="WheelBaseLength" Type="float" />
+    <Property Name="LeftWeight" Type="float" />
+    <Property Name="RightWeight" Type="float" />
+    <Property Name="GrossWeight" Type="float" />
+    <Property Name="LimitWeight" Type="float" />
+    <Property Name="OverloadPercent" Type="float" />
+    <Property Name="OverloadStatus" Type="int" />
+    <Property Name="TranStatus" Type="int" />
+    <Property Name="LicensePlate" Type="nvarchar" MaxLength="20" />
+    <Property Name="AxlesCount" Type="int" />
+    <Property Name="LaneCode" Type="nvarchar" MaxLength="10" />
+    <Property Name="VehicleTypeCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="TransactionId" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <Association Name="FK_AspNetUserRoles_AspNetRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRoles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles_AspNetUsers">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+    <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaims">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogins">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Trans_RawAxles_Trans_VehicleInfo">
+    <End Role="Trans_VehicleInfo" Type="Self.Trans_VehicleInfo" Multiplicity="0..1" />
+    <End Role="Trans_RawAxles" Type="Self.Trans_RawAxles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Trans_VehicleInfo">
+        <PropertyRef Name="TranId" />
+      </Principal>
+      <Dependent Role="Trans_RawAxles">
+        <PropertyRef Name="TranId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WIMModelStoreContainer">
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_AxleType" EntityType="Self.LS_AxleType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_CameraConfig" EntityType="Self.LS_CameraConfig" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_Dataloger" EntityType="Self.LS_Dataloger" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_Lane" EntityType="Self.LS_Lane" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_Report" EntityType="Self.LS_Report" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_Station" EntityType="Self.LS_Station" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_VehicleType" EntityType="Self.LS_VehicleType" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_VMS" EntityType="Self.LS_VMS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUP_DeviceStatus" EntityType="Self.SUP_DeviceStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUP_DeviceStatusHistory" EntityType="Self.SUP_DeviceStatusHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUP_DeviceStatusLog" EntityType="Self.SUP_DeviceStatusLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SYS_ConfigInfo" EntityType="Self.SYS_ConfigInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trans_RawAxles" EntityType="Self.Trans_RawAxles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Trans_VehicleInfo" EntityType="Self.Trans_VehicleInfo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="Self.FK_AspNetUserRoles_AspNetRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers" Association="Self.FK_AspNetUserRoles_AspNetUsers">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Trans_RawAxles_Trans_VehicleInfo" Association="Self.FK_Trans_RawAxles_Trans_VehicleInfo">
+      <End Role="Trans_VehicleInfo" EntitySet="Trans_VehicleInfo" />
+      <End Role="Trans_RawAxles" EntitySet="Trans_RawAxles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

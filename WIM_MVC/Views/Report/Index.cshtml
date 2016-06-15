@@ -1,0 +1,109 @@
+﻿@model IEnumerable<WIM_MVC.Models.EntityFramework.LS_Report>
+
+@section head
+{
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" media="screen" type="text" />
+}
+
+
+@section scripts
+{
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#reportTable tr').click(function () {
+            $('#reportTable tr').each(function () {
+                $(this).removeClass("selected");
+            });
+            var id = $(this).attr("id");
+            $('#selectedReport').val(id);
+            $(this).addClass("selected");
+        });
+
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        $('#datetimepicker1').datetimepicker({
+            defaultDate: date,
+            format: 'DD/MM/YYYY'
+        });
+
+        $('#datetimepicker2').datetimepicker({
+            defaultDate: Date.now(),
+            format: 'DD/MM/YYYY'
+        });
+
+    });
+
+    function validateForm() {
+        var reportId = $('#selectedReport').val();
+        if(reportId == "0")
+        {
+            //alert("Vui lòng chọn báo cáo");
+            $('.overlay').show();
+            $('.messagebox').show();
+            $('#messageContent').html('Vui lòng chọn báo cáo');
+            return false;
+        }
+        return true;
+    };
+
+    </script>
+}
+
+@{
+    ViewBag.Title = "BÁO CÁO THỐNG KÊ";
+    var ReportList = ViewBag.ReportList;
+}
+
+<h3>@ViewBag.Title</h3>
+
+@using (Html.BeginForm("GeneratePDF", "Report", FormMethod.Post, 
+    new {enctype="multipart/form-data", onsubmit="return validateForm();", @class = "form-horizontal", target = "_blank", role = "form" }))
+{
+    <hr />
+    <div class="col-md-4">
+        <table class="wimtable" id="reportTable" style="width:300px">
+            <tr id="0">
+                <th style="text-align:left">Chọn Báo cáo</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr id="@item.ReportID">
+                    <td style="text-align:left">
+                        @Html.DisplayFor(modelItem => item.ReportName)
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    
+    <div class="col-md-4" style="border-left:1px solid gray;margin-left:400px ">
+        <input type="hidden" id="selectedReport" name="ReportId" value="0" />
+
+        <div class="form-group" style="padding:0px 10px">
+            @Html.Label("Từ ngày")
+            <div class='input-group date' id='datetimepicker1' style="width:180px">
+                <input type='text' class="form-control" name="fromDate" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="form-group" style="padding:0px 10px">
+            @Html.Label("Đến ngày")
+            <div class='input-group date' id='datetimepicker2' style="width:180px">
+                <input type='text' class="form-control" name="toDate" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+
+        <input type="submit" value="Xem báo cáo" class="btn btn-default" />
+    </div>
+}
+

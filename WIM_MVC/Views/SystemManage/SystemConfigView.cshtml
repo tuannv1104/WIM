@@ -1,0 +1,169 @@
+﻿@model IEnumerable<WIM_MVC.Models.EntityFramework.SYS_ConfigInfo>
+
+@{
+    ViewBag.Title = "CẤU HÌNH HỆ THỐNG";
+}
+
+<h3>@ViewBag.Title</h3>
+
+
+    <table class="table">
+        <tr>
+            <th style="width:100px" text-align="center">
+                Mã cấu hình
+            </th>
+            <th style="width:150px" text-align="center">
+                Tên cấu hình
+               </th>
+            <th style="width:220px" text-align="center">
+                Mô tả
+            </th>
+            <th style="width:250px" text-align="center">
+                Định dạng
+            </th>
+            <th style="width:220px; display:none" text-align="center">
+                @Html.DisplayNameFor(model => model.InfoType)
+            </th>
+            <th style="width:150px" text-align="center">
+               Tình trạng sử dụng
+            </th>
+            <th style="border-left:1px solid #ccc">&nbsp;</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            using (Html.BeginForm("SystemConfigView", "SystemManage", FormMethod.Post, new { id = @item.Key}))
+            {
+                @Html.AntiForgeryToken()
+            <tr>
+                <td style="width:100px; text-align:center">
+                    <input type="hidden" value="@item.ConfigInfoID" name="configId" />
+                    <label id="ConfigInfoID" style="font-weight:normal">@item.ConfigInfoID</label>
+                </td>
+                <td style="width:150px">
+                    <span>
+                        <label id="Key" style="font-weight:normal">@item.Key</label>
+                    </span>
+                </td>
+                <td style="width:220px">
+                    <span>
+                        <label id="Description" style="font-weight:normal">@item.Description</label>
+                    </span>
+                </td>
+                <td style="width:250px">
+                    <span class="display-mode">
+                        <label id="Value" style="font-weight:normal; color:#008">@item.Value</label>
+                    </span>
+                   <input name="configValue" type="text" id="editValue" value="@item.Value" class="edit-mode" style="width:220px" />
+                </td>
+                <td style="width:220px; display:none">
+                    <span>
+                        <label id="InfoType" style="font-weight:normal">@item.InfoType</label>
+                    </span>
+                </td>
+                <td style="width:150px; text-align:center">
+                    @{
+                if (item.IsUsed == true)
+                {
+                            <img src="~/Images/tick_16.png" />
+                }
+                else
+                { 
+                            <img src="~/Images/forbidden.png" />
+                }
+                    }
+                </td>
+                <td style="border-left:1px solid #ccc">
+                    <a class="editbtn display-mode">chỉnh sửa</a>
+                    <input type="submit" value="Save" class="btn btn-default edit-mode" onclick="checkConfirm('@item.Key'); return false;" />
+                    <span class="edit-mode">&nbsp;|&nbsp;</span> <a class="cancelbtn edit-mode">Cancel</a>
+                </td>
+            </tr>
+            }
+        }
+
+    </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.edit-mode').hide();
+            $('.editbtn').on('click', function () {
+                var tr = $(this).parents('tr:first');
+                tr.find('.edit-mode, .display-mode').toggle();
+                var Value = tr.find("#Value").html();
+                tr.find("#editValue").val(Value);
+            });
+
+            $('.cancelbtn').on('click', function () {
+                var tr = $(this).parents('tr:first');
+                tr.find('.edit-mode, .display-mode').toggle();
+            });
+
+            $('#btnConfirmOK').html('Lưu').click(function () {
+                $('#'+configKey).submit();
+            });
+
+            //$('.savebtn').on('click', function () {
+            //    var tr = $(this).parents('tr:first');
+
+            //    var ConfigInfoID = tr.find("#ConfigInfoID").html();
+            //    var Key = tr.find("#Key").html();
+            //    var Description = tr.find("#Description").html();
+            //    var Value = tr.find("#editValue").val();
+            //    var InfoType = tr.find("#InfoType").html();
+
+            //    tr.find('.edit-mode, .display-mode').toggle();
+
+            //    var oldValue = tr.find("#Value").html();
+            //    if (Value == oldValue) {
+            //        return;
+            //    }
+
+            //    if (!confirm("Bạn thực sự muốn thay đổi thông số : " + Value + " ?")) {
+            //        return;
+            //    }
+
+            //    var SysConfigModel =
+            //    {
+            //        "ConfigInfoID": ConfigInfoID,
+            //        "Key": Key,
+            //        "Description": Description,
+            //        "Value": Value,
+            //        "InfoType": ' ',
+            //        "IsUsed": 1
+            //    };
+
+            //    $.ajax({
+            //        url: '/SystemManage/SystemConfigView/',
+            //        data: JSON.stringify(SysConfigModel),
+            //        type: 'POST',
+            //        contentType: 'application/json; charset=utf-8',
+            //        error: function(jqXHR, textStatus, errorThrown){
+            //            alert("Lưu cấu hình thất bại! " + errorThrown);
+            //        },
+            //        success: function () {
+            //            tr.find("#Value").text(Value);
+            //            alert("Lưu cấu hình thành công");
+            //        }
+            //    });
+
+            //});
+        });
+
+        var pattern = /\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/;
+        var configKey;
+        function checkConfirm(key) {
+            configKey = key;
+            //if (configKey.indexOf('_IP') > -1) {
+            //    if(!pattern.test())
+            //}
+            $('.overlay').show();
+            $('.confirmbox').show();
+            $('#confirmContent').html('Bạn thực sự muốn thay đổi thông số?');
+        }
+
+    </script>
+}

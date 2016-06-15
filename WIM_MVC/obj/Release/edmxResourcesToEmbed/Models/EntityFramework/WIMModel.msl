@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WIMModelStoreContainer" CdmEntityContainer="WIMEntities">
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="WIMModel.AspNetRole">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="WIMModel.AspNetUserClaim">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="WIMModel.AspNetUserLogin">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="WIMModel.AspNetUser">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Discriminator" ColumnName="Discriminator" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_AxleType">
+      <EntityTypeMapping TypeName="WIMModel.LS_AxleType">
+        <MappingFragment StoreEntitySet="LS_AxleType">
+          <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="AxleTypeCode" ColumnName="AxleTypeCode" />
+          <ScalarProperty Name="AxleTypeID" ColumnName="AxleTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_CameraConfig">
+      <EntityTypeMapping TypeName="WIMModel.LS_CameraConfig">
+        <MappingFragment StoreEntitySet="LS_CameraConfig">
+          <ScalarProperty Name="StopTime" ColumnName="StopTime" />
+          <ScalarProperty Name="PreTime" ColumnName="PreTime" />
+          <ScalarProperty Name="StationID" ColumnName="StationID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Bosch_IPAddress" ColumnName="Bosch_IPAddress" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_Dataloger">
+      <EntityTypeMapping TypeName="WIMModel.LS_Dataloger">
+        <MappingFragment StoreEntitySet="LS_Dataloger">
+          <ScalarProperty Name="TIME_WAIT" ColumnName="TIME_WAIT" />
+          <ScalarProperty Name="REBOOT_TIME" ColumnName="REBOOT_TIME" />
+          <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+          <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+          <ScalarProperty Name="TIME_DELTA" ColumnName="TIME_DELTA" />
+          <ScalarProperty Name="PORT" ColumnName="PORT" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_Lane">
+      <EntityTypeMapping TypeName="WIMModel.LS_Lane">
+        <MappingFragment StoreEntitySet="LS_Lane">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+          <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+          <ScalarProperty Name="LaneType" ColumnName="LaneType" />
+          <ScalarProperty Name="Direction" ColumnName="Direction" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StationCode" ColumnName="StationCode" />
+          <ScalarProperty Name="LaneCode" ColumnName="LaneCode" />
+          <ScalarProperty Name="LaneId" ColumnName="LaneId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_Report">
+      <EntityTypeMapping TypeName="WIMModel.LS_Report">
+        <MappingFragment StoreEntitySet="LS_Report">
+          <ScalarProperty Name="IsReport" ColumnName="IsReport" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="Enable" ColumnName="Enable" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="ReportName" ColumnName="ReportName" />
+          <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+          <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_Station">
+      <EntityTypeMapping TypeName="WIMModel.LS_Station">
+        <MappingFragment StoreEntitySet="LS_Station">
+          <ScalarProperty Name="RootImagePath" ColumnName="RootImagePath" />
+          <ScalarProperty Name="CompanyFax" ColumnName="CompanyFax" />
+          <ScalarProperty Name="CompanyPhone" ColumnName="CompanyPhone" />
+          <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="StationName" ColumnName="StationName" />
+          <ScalarProperty Name="StationCode" ColumnName="StationCode" />
+          <ScalarProperty Name="StationId" ColumnName="StationId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_VehicleType">
+      <EntityTypeMapping TypeName="WIMModel.LS_VehicleType">
+        <MappingFragment StoreEntitySet="LS_VehicleType">
+          <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="VehicleTypeCode" ColumnName="VehicleTypeCode" />
+          <ScalarProperty Name="VehicleTypeID" ColumnName="VehicleTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_VMS">
+      <EntityTypeMapping TypeName="WIMModel.LS_VMS">
+        <MappingFragment StoreEntitySet="LS_VMS">
+          <ScalarProperty Name="DISPLAY_MODE" ColumnName="DISPLAY_MODE" />
+          <ScalarProperty Name="DISPLAY_LINE" ColumnName="DISPLAY_LINE" />
+          <ScalarProperty Name="DISPLAY_TIME" ColumnName="DISPLAY_TIME" />
+          <ScalarProperty Name="HEIGHT_INDEX" ColumnName="HEIGHT_INDEX" />
+          <ScalarProperty Name="HEADR" ColumnName="HEADR" />
+          <ScalarProperty Name="WIDTH_INDEX" ColumnName="WIDTH_INDEX" />
+          <ScalarProperty Name="DISTANCE" ColumnName="DISTANCE" />
+          <ScalarProperty Name="FONT_SIZE" ColumnName="FONT_SIZE" />
+          <ScalarProperty Name="FONT" ColumnName="FONT" />
+          <ScalarProperty Name="CHIP_TYPE" ColumnName="CHIP_TYPE" />
+          <ScalarProperty Name="WIDTH" ColumnName="WIDTH" />
+          <ScalarProperty Name="HEIGHT" ColumnName="HEIGHT" />
+          <ScalarProperty Name="PORT" ColumnName="PORT" />
+          <ScalarProperty Name="IP" ColumnName="IP" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUP_DeviceStatus">
+      <EntityTypeMapping TypeName="WIMModel.SUP_DeviceStatus">
+        <MappingFragment StoreEntitySet="SUP_DeviceStatus">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Sequence" ColumnName="Sequence" />
+          <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="LaneCode" ColumnName="LaneCode" />
+          <ScalarProperty Name="StationCode" ColumnName="StationCode" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+          <ScalarProperty Name="DeviceCodeType" ColumnName="DeviceCodeType" />
+          <ScalarProperty Name="LaneDeviceID" ColumnName="LaneDeviceID" />
+          <ScalarProperty Name="DeviceStatusID" ColumnName="DeviceStatusID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUP_DeviceStatusHistory">
+      <EntityTypeMapping TypeName="WIMModel.SUP_DeviceStatusHistory">
+        <MappingFragment StoreEntitySet="SUP_DeviceStatusHistory">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+          <ScalarProperty Name="LaneCode" ColumnName="LaneCode" />
+          <ScalarProperty Name="StationCode" ColumnName="StationCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+          <ScalarProperty Name="DeviceCodeType" ColumnName="DeviceCodeType" />
+          <ScalarProperty Name="LaneDeviceID" ColumnName="LaneDeviceID" />
+          <ScalarProperty Name="DeviceStatusID" ColumnName="DeviceStatusID" />
+          <ScalarProperty Name="DeviceStatusHistoryID" ColumnName="DeviceStatusHistoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUP_DeviceStatusLog">
+      <EntityTypeMapping TypeName="WIMModel.SUP_DeviceStatusLog">
+        <MappingFragment StoreEntitySet="SUP_DeviceStatusLog">
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="EndStatus" ColumnName="EndStatus" />
+          <ScalarProperty Name="BeginStatus" ColumnName="BeginStatus" />
+          <ScalarProperty Name="StationID" ColumnName="StationID" />
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SYS_ConfigInfo">
+      <EntityTypeMapping TypeName="WIMModel.SYS_ConfigInfo">
+        <MappingFragment StoreEntitySet="SYS_ConfigInfo">
+          <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="InfoType" ColumnName="InfoType" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="ConfigInfoID" ColumnName="ConfigInfoID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trans_VehicleInfo">
+      <EntityTypeMapping TypeName="WIMModel.Trans_VehicleInfo">
+        <MappingFragment StoreEntitySet="Trans_VehicleInfo">
+          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+          <ScalarProperty Name="VehicleTypeCode" ColumnName="VehicleTypeCode" />
+          <ScalarProperty Name="LaneCode" ColumnName="LaneCode" />
+          <ScalarProperty Name="AxlesCount" ColumnName="AxlesCount" />
+          <ScalarProperty Name="LicensePlate" ColumnName="LicensePlate" />
+          <ScalarProperty Name="TranStatus" ColumnName="TranStatus" />
+          <ScalarProperty Name="OverloadStatus" ColumnName="OverloadStatus" />
+          <ScalarProperty Name="OverloadPercent" ColumnName="OverloadPercent" />
+          <ScalarProperty Name="LimitWeight" ColumnName="LimitWeight" />
+          <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+          <ScalarProperty Name="RightWeight" ColumnName="RightWeight" />
+          <ScalarProperty Name="LeftWeight" ColumnName="LeftWeight" />
+          <ScalarProperty Name="WheelBaseLength" ColumnName="WheelBaseLength" />
+          <ScalarProperty Name="VehicleLength" ColumnName="VehicleLength" />
+          <ScalarProperty Name="Velocity" ColumnName="Velocity" />
+          <ScalarProperty Name="LoggerId" ColumnName="LoggerId" />
+          <ScalarProperty Name="WeightIdFromLogger" ColumnName="WeightIdFromLogger" />
+          <ScalarProperty Name="VehicleIdFromLogger" ColumnName="VehicleIdFromLogger" />
+          <ScalarProperty Name="WeightDuration" ColumnName="WeightDuration" />
+          <ScalarProperty Name="WeightEndTime" ColumnName="WeightEndTime" />
+          <ScalarProperty Name="WeightBeginTime" ColumnName="WeightBeginTime" />
+          <ScalarProperty Name="TranId" ColumnName="TranId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="WIMModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="UserId" />
+      </EndProperty>
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="RoleId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="Trans_RawAxles">
+      <EntityTypeMapping TypeName="WIMModel.Trans_RawAxles">
+        <MappingFragment StoreEntitySet="Trans_RawAxles">
+          <ScalarProperty Name="LimitWeight" ColumnName="LimitWeight" />
+          <ScalarProperty Name="OverloadPercent" ColumnName="OverloadPercent" />
+          <ScalarProperty Name="OverloadStatus" ColumnName="OverloadStatus" />
+          <ScalarProperty Name="Distance" ColumnName="Distance" />
+          <ScalarProperty Name="LeftRightImbalance" ColumnName="LeftRightImbalance" />
+          <ScalarProperty Name="RightWeight" ColumnName="RightWeight" />
+          <ScalarProperty Name="LeftWeight" ColumnName="LeftWeight" />
+          <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+          <ScalarProperty Name="Velocity" ColumnName="Velocity" />
+          <ScalarProperty Name="AxleGroupId" ColumnName="AxleGroupId" />
+          <ScalarProperty Name="VehicleIdFromLogger" ColumnName="VehicleIdFromLogger" />
+          <ScalarProperty Name="TranId" ColumnName="TranId" />
+          <ScalarProperty Name="AxleId" ColumnName="AxleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

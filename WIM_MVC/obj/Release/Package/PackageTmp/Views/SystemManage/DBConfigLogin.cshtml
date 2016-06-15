@@ -1,0 +1,47 @@
+﻿@model WIM_MVC.Models.DBConfigLoginModels
+
+@{
+    ViewBag.Title = "ĐĂNG NHẬP CẤU HÌNH HỆ THỐNG";
+}
+
+<h3>@ViewBag.Title</h3>
+
+<section id="sytemConfigLoginForm">
+    @using (Html.BeginForm("DBConfigLogin", "SystemManage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.DBConfigPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.DBConfigPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DBConfigPassword)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Đăng nhập" class="btn btn-default" />
+            </div>
+        </div>
+
+        @*<fieldset>
+            <legend>Log in Form</legend>
+            <ol>
+                <li>
+                    @Html.LabelFor(m => m.SystemConfigPassword)
+                    @Html.PasswordFor(m => m.SystemConfigPassword)
+                    @Html.ValidationMessageFor(m => m.SystemConfigPassword)
+                </li>
+            </ol>
+            <input type="submit" value="Log in" />
+        </fieldset>*@
+    }
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

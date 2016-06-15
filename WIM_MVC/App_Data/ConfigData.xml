@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <Config>
+    <ConfigId>DBConfigPassword</ConfigId>
+    <ConfigName>DBConfigPassword</ConfigName>
+    <ConfigValue>123</ConfigValue>
+    <ConfigNote>.</ConfigNote>
+  </Config>
+  <Config>
+    <ConfigId>DBServer</ConfigId>
+    <ConfigName>DBServer</ConfigName>
+    <ConfigValue>SOFT-W\MSSQLSERVER2K14</ConfigValue>
+    <ConfigNote>.</ConfigNote>
+  </Config>
+  <Config>
+    <ConfigId>DBDatabase</ConfigId>
+    <ConfigName>DBDatabase</ConfigName>
+    <ConfigValue>WIM</ConfigValue>
+    <ConfigNote>.</ConfigNote>
+  </Config>
+  <Config>
+    <ConfigId>DBUserName</ConfigId>
+    <ConfigName>DBUserName</ConfigName>
+    <ConfigValue>sa</ConfigValue>
+    <ConfigNote>.</ConfigNote>
+  </Config>
+  <Config>
+    <ConfigId>DBPassword</ConfigId>
+    <ConfigName>DBPassword</ConfigName>
+    <ConfigValue>Abcd1234</ConfigValue>
+    <ConfigNote>.</ConfigNote>
+  </Config>
+</root>

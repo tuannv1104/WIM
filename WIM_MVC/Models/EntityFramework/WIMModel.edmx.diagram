@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c550e0bd8098489192e2acf37e40b157" Name="Diagram1" ZoomLevel="50">
+        <EntityTypeShape EntityType="WIMModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.375" />
+        <EntityTypeShape EntityType="WIMModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="WIMModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="WIMModel.AspNetUser" Width="1.5" PointX="3" PointY="1.875" />
+        <EntityTypeShape EntityType="WIMModel.LS_AxleType" Width="1.5" PointX="5.75" PointY="6.75" />
+        <EntityTypeShape EntityType="WIMModel.LS_CameraConfig" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WIMModel.LS_Dataloger" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="WIMModel.LS_Lane" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="WIMModel.LS_Report" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WIMModel.LS_Station" Width="1.5" PointX="9.75" PointY="4.75" />
+        <EntityTypeShape EntityType="WIMModel.LS_VehicleType" Width="1.5" PointX="9.75" PointY="8.75" />
+        <EntityTypeShape EntityType="WIMModel.LS_VMS" Width="1.5" PointX="11.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WIMModel.SUP_DeviceStatus" Width="1.5" PointX="11.75" PointY="5.75" />
+        <EntityTypeShape EntityType="WIMModel.SUP_DeviceStatusHistory" Width="1.5" PointX="11.75" PointY="9.75" />
+        <EntityTypeShape EntityType="WIMModel.SUP_DeviceStatusLog" Width="1.5" PointX="2.75" PointY="12.75" />
+        <EntityTypeShape EntityType="WIMModel.SYS_ConfigInfo" Width="1.5" PointX="4.75" PointY="12.75" />
+        <EntityTypeShape EntityType="WIMModel.Trans_VehicleInfo" Width="1.5" PointX="0.75" PointY="7.125" />
+        <AssociationConnector Association="WIMModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_User_Id" />
+        <AssociationConnector Association="WIMModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="WIMModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="WIMModel.Trans_RawAxles" Width="1.5" PointX="3" PointY="8" />
+        <AssociationConnector Association="WIMModel.FK_Trans_RawAxles_Trans_VehicleInfo" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,187 @@
+﻿@*@model IEnumerable<WIM_MVC.Models.EntityFramework.Trans_VehicleInfo>*@
+
+@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<WIM_MVC.Models.EntityFramework.Trans_VehicleInfo>
+
+<div style="position:absolute; width:auto; margin-right:100px">
+    <table class="wimtable" style="position:relative">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                @Resources.TableHeader.Detail
+            </th>
+            <th>
+                @Resources.TableHeader.General_Lane
+            </th>
+            <th>
+                @Resources.TableHeader.General_DateTime
+            </th>
+            <th>
+                @Resources.TableHeader.General_VehicleType
+            </th>
+            <th>
+                @Resources.TableHeader.General_PlateNumber
+            </th>
+            <th>
+                @Resources.TableHeader.General_GrossWeight
+            </th>
+            <th>
+                @Resources.TableHeader.General_GrossWeightAllowable
+            </th>
+            <th>
+                @Resources.TableHeader.General_LeftRightBalance
+            </th>
+            <th>
+                @Resources.TableHeader.General_Speed
+            </th>
+            <th>
+                @Resources.TableHeader.General_Length
+            </th>
+            <th>
+                @Resources.TableHeader.General_NumberAxis
+            </th>
+            <th>
+                @Resources.TableHeader.General_PercentOverload
+            </th>
+            <th>
+                @Resources.TableHeader.OverLoadLevel
+            </th>
+        </tr>
+        @if (ViewBag.ErrorGetdate == true)
+        {
+            <tr><td colspan="14"> Vui lòng điền ngày tháng</td></tr>
+        }
+        else if (ViewBag.ErrorPeriodTime == true)
+        {
+            <tr><td colspan="14"> Từ ngày không được lớn hơn đến ngày</td></tr>
+        }
+        else if (Model == null)
+        {
+            <tr><td colspan="14"> Không tìm thấy kết quả</td></tr>
+        }
+        else if (Model.Count == 0)
+        {
+            <tr><td colspan="14"> Không tìm thấy kết quả</td></tr>
+        }
+        else
+        {
+            var dem = 0;
+            <div>
+                <div style="text-align: left">Tổng số lượt tìm kiếm: @ViewBag.TotalSearch</div>
+                <div style="text-align:right">
+                    @Html.ActionLink("Xuất file Excel", "ExportExcel")
+                </div>
+            </div>
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td style="padding:10px 10px 10px 10px">
+                        @{
+                dem = dem + 1;
+                string number = dem.ToString();
+                @Html.DisplayFor(modelItem => number)
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", "GeneralView", new { id = item.TranId, sid = ViewBag.SID})"><img src="~/Images/details.png" /></a>
+                    </td>
+                    <td style="padding:10px 10px 10px 10px">
+                        @Html.DisplayFor(modelItem => item.LaneCode)
+                    </td>
+                    <td width="170" style="padding:10px 10px 10px 10px">
+                        @Html.DisplayFor(modelItem => item.WeightBeginTime)
+                    </td>
+                    <td width="100" style="padding:10px 10px 10px 10px">
+                        @{
+                string img = "~/Images/axles-" + item.AxlesCount.ToString() + ".png";
+                string imgW = item.AxlesCount == 7 ? "80"
+                            : item.AxlesCount == 6 ? "70"
+                            : item.AxlesCount == 5 ? "60"
+                            : item.AxlesCount == 4 ? "55"
+                            : item.AxlesCount == 3 ? "50"
+                                                   : "45";
+                        }
+                        <img width="@imgW" height="20" src="@Url.Content(img)" />
+                    </td>
+                    <td style="text-align:left; padding:10px 10px 10px 10px">
+                        @Html.DisplayFor(modelItem => item.LicensePlate)
+                    </td>
+                    <td style="text-align:right; padding:10px 10px 10px 10px">
+                        @{
+                string Gross = item.GrossWeight.ToString() + " kg";
+                        }
+                        @Html.DisplayFor(modelItem => Gross)
+                    </td>
+
+                    <td style="text-align:right; padding:10px 10px 10px 10px">
+                        @{
+                string Limit = item.LimitWeight.ToString() + " kg";
+                        }
+                        @Html.DisplayFor(modelItem => Limit)
+                    </td>
+
+                    <td style="padding:10px 10px 10px 10px">
+                        @{
+                var l = Math.Round(item.LeftWeight.Value / item.GrossWeight.Value * 100);
+                var r = 100 - l;
+                string balance = l.ToString() + "/" + r.ToString();
+                @Html.DisplayFor(modelItem => balance)
+                        }
+                    </td>
+                    <td style="text-align: right; padding:10px 10px 10px 10px">
+                        @{
+                string Velocity = item.Velocity.ToString() + " km/h";
+                        }
+                        @Html.DisplayFor(modelItem => Velocity)
+                    </td>
+                    <td style="text-align: right; padding: 10px 10px 10px 10px">
+                        @{
+                string VehiLength = item.VehicleLength.ToString() + " m";
+                        }
+                        @Html.DisplayFor(modelItem => VehiLength)
+                    </td>
+                    <td style="padding:10px 10px 10px 10px">
+                        @Html.DisplayFor(modelItem => item.AxlesCount)
+                    </td>
+                    <td style="padding:10px 10px 10px 10px">
+                        @Html.DisplayFor(modelItem => item.OverloadPercent)
+                    </td>
+                    <td style="padding:10px 10px 10px 10px">
+                        @{
+
+                if (item.OverloadStatus == 1)
+                {
+                    string levelImg = item.OverloadPercent >= 50 ? "~/Images/overload_3.png" :
+                                      item.OverloadPercent <= 50 && item.OverloadPercent >= 10 ? "~/Images/overload_2.png" :
+                                      item.OverloadPercent <= 10 && item.OverloadPercent > 0 ? "~/Images/overload_1.png" : string.Empty;
+                    <img width="25" height="25" src="@Url.Content(levelImg)" />
+                }
+                        }
+                    </td>
+
+                </tr>
+            }
+        }
+    </table>
+
+    <div style="float: right; margin-bottom:10px">
+        @Html.PagedListPager(Model, page => Url.Action("Search", new
+                                                                   {
+                                                                       violateLevel = ViewBag.ViolateLevel,
+                                                                       laneItems = ViewBag.LaneItems,
+                                                                       fromDate = ViewBag.FromDate,
+                                                                       toDate = ViewBag.ToDate,
+                                                                       axles = ViewBag.Axles,
+                                                                       plateNumber = ViewBag.PlateNumber,
+                                                                       page
+                                                                   }),
+                                   PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "divTransaction"/*, OnSuccess = "addrowheader()"*/ }))
+    </div>
+</div>
+
+
+

@@ -1,0 +1,112 @@
+﻿@*@model IEnumerable<WIM_MVC.Models.EntityFramework.AspNetUser>*@
+
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<WIM_MVC.Models.EntityFramework.AspNetUser>
+
+@{
+    ViewBag.Title = "QUẢN TRỊ TÀI KHOẢN";
+}
+
+<h3>@ViewBag.Title</h3>
+<hr />
+<center>
+
+    <div style="clear: both; width:60%;">
+
+        <div style="float:left">
+            @using (Html.BeginForm("Index", "Account", FormMethod.Get))
+            {
+                <b> Tìm kiếm: </b>
+                @Html.RadioButton("option", "Name", true) <text> Tên </text>
+                @*@Html.RadioButton("option", "UserName") <text> Tên đăng nhập </text>*@
+                @Html.TextBox("search")
+                <input type="submit" class="btn btn-default" name="submit" value="Tìm" />
+            }
+        </div>
+        <div style="float:right">
+            @Html.PagedListPager(Model, pageNumber => Url.Action("Index", new
+            {
+                pageNumber,
+                option = Request.QueryString["option"],
+                search = Request.QueryString["search"]
+            }))
+        </div>
+
+
+
+        <div style="text-align:left; clear:both">
+            @Html.ActionLink("Đăng ký tài khoản", "Register", "Account", routeValues: null, htmlAttributes: new { id = "RegisterLink" })
+        </div>
+
+        <table class="wimtable" id="accountTable" style="width:700px">
+            <tr>
+                <th style="width:100px;">@Resources.TableHeader.User_UserName</th>
+                <th style="width:200px;">@Resources.TableHeader.User_LastName</th>
+                <th style="width:100px;">@Resources.TableHeader.User_FirstName</th>
+                <th></th>
+            </tr>
+            @if (Model.Count == 0)
+            {
+                <tr><td colspan="4"> Không tìm thấy kết quả</td></tr>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="width: 100px; text-align: left">
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td style="width:200px; text-align:left">
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        <td style="width: 100px; text-align: left">
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @{
+                                @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "rowdetails", title = "Chi tiết" })
+                                @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "rowedit", title = "Chỉnh sửa" })
+                                string userid = item.Id;
+                                if (!item.UserName.ToLower().Equals("admin"))
+                                {
+                                    @Html.ActionLink(" ", "ResetPassword", new { id = item.Id }, new { @class = "rowchangepassword", title = "Cấp mật khẩu mới" })
+                                    @Html.ActionLink(" ", "Authorize", new { id = item.Id }, new { @class = "rowauthorize", title = "Phân quyền" })
+                                    if (!item.UserName.Equals(User.Identity.Name)) 
+                                    { 
+                                        @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "rowdelete confirmDelete", title = "Xóa" })
+                                    }
+                                }
+                              }</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+
+</center>
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            addrowheader('accountTable');
+            $('#btnConfirmOK').html('Xóa').click(function () {
+                window.location.href = targetUrl;
+            });
+        });
+
+        var targetUrl;
+        $(".confirmDelete").click(function (e) {
+            e.preventDefault();
+            targetUrl = $(this).attr("href");
+            $('.overlay').show();
+            $('.confirmbox').show();
+            $('#confirmContent').html('Bạn thực sự muốn xóa tài khoản?');
+        });
+
+    </script>
+}

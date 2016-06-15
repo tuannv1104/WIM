@@ -1,0 +1,448 @@
+﻿@using WIM_MVC.Controllers
+@using WIM_MVC.Models
+
+@model WIM_MVC.Models.EntityFramework.Trans_VehicleInfo
+
+@{
+    ViewBag.Title = "XEM CHI TIẾT";
+    GlobalController gCtrl = new GlobalController();
+    var lanImage = "/Images/no-image.jpg";
+    var recogImage = "/Images/no-image.jpg";
+    string imgPathC = Global.Instance.ColorImagePath + gCtrl.GetPathFromImageID(Model.TransactionId) + Global.Instance.ColorImageType;
+    var absolutePathC = HttpContext.Current.Server.MapPath("~" + imgPathC);
+    absolutePathC = absolutePathC.Replace("\\", "/");
+    if (System.IO.File.Exists(absolutePathC))
+    {
+        lanImage = imgPathC.Replace("\\", "/");
+    }
+    string imgPathR = Global.Instance.RecogImagePath + gCtrl.GetPathFromImageID(Model.TransactionId) + Global.Instance.RecogImageType;
+    string absolutePathR = HttpContext.Current.Server.MapPath("~" + imgPathR);
+    absolutePathR = absolutePathR.Replace("\\", "/");
+    if (System.IO.File.Exists(absolutePathR))
+    {
+        recogImage = imgPathR.Replace("\\", "/");
+    }
+
+    string statusImage = "~/Images/no-overload.ico";
+    if (Model.OverloadStatus == 1)
+    {
+        statusImage = "~/Images/overload.ico";
+    }
+
+}
+<style type="text/css">
+    #ImageRog:hover {
+        cursor: zoom-in;
+    }
+
+    .border-right {
+        border-right: 1px solid #DDD;
+    }
+</style>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $('#editPlate').keyup(function (e) {
+            if (e.keyCode === 13) {
+                $("#numberPlate").css("display", "inline");
+                $("#editPlate").css("display", "none");
+                var newplate = $("#editPlate").val();//$("#editPlate").attr("value");
+                //$("#numberPlate").;
+                $('#numberPlate').html(newplate);
+            }
+        });
+
+
+    });
+
+    function imageRog_Click() {
+        var iMaxWidth = $("#imageLane").width();
+        var isZoom = $("#imageRecogDiv").attr("zoom");
+        if (isZoom === "true") {
+            $("#imageRecogDiv").attr("zoom", false);
+            $("#imageRecogDiv")
+                .animate({
+                    width: "30%",
+                    right: "0px"
+                },
+                    "slow");
+            $("#imageRog").css("cursor", "zoom-in");
+        } else {
+            $("#imageRecogDiv")
+                .animate({
+                    right: (0 - iMaxWidth / 2).toString(),
+                    width: (iMaxWidth).toString()
+                },
+                    "slow");
+            $("#imageRecogDiv").attr("zoom", true);
+            $("#imageRog").css("cursor", "zoom-out");
+
+        }
+    };
+
+    function imageLan_Click() {
+        var iMaxWidth = 700;
+        var isZoom = $("#imageLanDiv").attr("zoom");
+        if (isZoom === "true") {
+            $("#imageLanDiv").attr("zoom", false);
+            $("#imageLanDiv")
+                .animate({
+                    width: "100%",
+                    right: "0px"
+                },
+                    "slow");
+            $("#imageLane").css("cursor", "zoom-in");
+        } else {
+            $("#imageLanDiv")
+                .animate({
+                    right: (0 - iMaxWidth / 2).toString(),
+                    width: (iMaxWidth).toString()
+                },
+                    "slow");
+            $("#imageLanDiv").attr("zoom", true);
+            $("#imageLane").css("cursor", "zoom-out");
+
+        }
+    };
+
+    function plate_Click() {
+
+        $("#numberPlate").css("display", "none");
+        $("#editPlate").css("display", "inline");
+        $("#editPlate").focus();
+        var plate = $('#numberPlate').html();
+        $("#editPlate").val(plate);
+    };
+
+    function updateplate_success() {
+        $("#numberPlate").css("display", "inline");
+        $("#editPlate").css("display", "none");
+    }
+</script>
+<h3>@ViewBag.Title</h3>
+<div id="detailBody">
+    <div id="prenext">
+        <ul class="pager">
+            @{
+                string sid = ViewBag.SID;
+                var listId = sid.Split('*').ToList();
+                listId.RemoveAt(0);
+                int index = listId.IndexOf(Model.TranId.ToString());
+                string pre = index <= 0 ? "pointer-events:none" : string.Empty;
+                string next = index >= listId.Count - 1 ? "pointer-events:none" : string.Empty;
+            }
+            <li class="next"><a href="@Url.Action("Details", new { id = Model.TranId, sid = ViewBag.SID, act = "next"})" style=@next>Next</a></li>
+            <li class="previous" style="float:right;margin-right:5px">
+                <a href="@Url.Action("Details",new {id = Model.TranId, sid = ViewBag.SID, act = "previous"})" style=@pre>Previous</a>
+            </li>
+        </ul>
+    </div>
+    <div id="leftContent">
+        @*<div class="imageBox" style="border:1px solid #DDD;">
+                <img class="colorImg" src="@Url.Content("file://" + @imgPath)" alt="Show color image of vehicle" style="height: 300px; width: 100%;"/>
+                <div style="position: absolute; width: 30%; display: none; bottom: 0px; right: 0px; z-index: 9999; border: 1px solid #DDD;"
+                     id="divRecong" zoom="false">
+                    <img alt="show image recognization"
+                         src="@Url.Content("file://" + @imgPath)" id="imgRecog" />
+                </div>
+            </div>*@
+        <div class="imageBox" style="border: 1px solid #DDD; width: 100%; position: relative">
+            <div style="position:relative; width: 100%; bottom: 0px; right: 0px; z-index: 3000; border: 1px solid #DDD;" id="imageLanDiv" zoom="false">
+                <img src="@Url.Content(lanImage)" alt="Show color image of vehicle" id="imageLane" style="cursor: zoom-in;border: none; width: 100%; height: 100%;" onclick="imageLan_Click();" />
+                </div>
+                <div style="position: absolute; width: 30%; bottom: 0px; right: 0px; z-index: 3000; border: 1px solid #DDD;" id="imageRecogDiv" zoom="false">
+                    <img alt="show image recognize" src="@Url.Content(recogImage)" id="imageRog" style="cursor: zoom-in; border: none; width: 100%; height: 100%" onclick="imageRog_Click();" />
+
+                </div>
+
+            </div>
+    </div>
+    <div id="rightContent">
+        <table class="overloadWarning" style="width:100%">
+            <tbody>
+                <tr>
+                    <th style="width: 5%"><img src="@Url.Content(statusImage)" alt="Note" style="height: 19px; width: 19px"></th>
+                    <td>
+                        Tổng trọng lượng quá tải: @Model.OverloadPercent % | Quá tải trục/cụm trục cao nhất: @(Model.Trans_RawAxles.Count > 0 ? @Model.Trans_RawAxles.OrderByDescending(o => o.OverloadPercent).FirstOrDefault().OverloadPercent : 0)%
+                        @*Tổng trọng lượng quá tải: @Model.OverloadPercent % | Quá tải trục/cụm trục cao nhất: @Model.Trans_RawAxles.OrderByDescending(o => o.OverloadPercent).FirstOrDefault().OverloadPercent %*@
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="padding: 10px 0px 20px 0px">
+            @*<form name="formVehiclePlate">*@
+            @using (Ajax.BeginForm("UpdatePlateNumber", new AjaxOptions
+{
+    HttpMethod = "Get",
+    UpdateTargetId = "numberPlate",
+    OnSuccess = "updateplate_success"
+}
+    ))
+            {
+                <div class="col-md-4">
+                    @Resources.TableHeader.General_PlateNumber: @*<span style="color: #007; font-weight:bold">*@<label id="numberPlate" style="text-decoration: none; cursor: pointer; color: #007; font-weight: bold; width: 100px; height: 20px;display:inline" onclick="plate_Click();" edit="true">@{
+                string bienso = Model.LicensePlate;
+
+                if (bienso != null && bienso != "")
+                {
+                    string begin = null, end = null;
+                    int split = 0;
+                    if (bienso.Length > 3)
+                    {
+                        begin = bienso.Substring(0, 3);
+                        split = 3;
+                        end = bienso.Substring(split);
+                    }
+                    if (bienso.Length > 8)
+                    {
+                        begin = bienso.Substring(0, 4);
+                        split = 4;
+                    }
+                    if (bienso.Length > 7)
+                    {
+                        string temp = bienso.Substring(split);
+                        string tempBegin = temp.Substring(0, 3);
+                        string tempEnd = temp.Substring(3);
+                        end = tempBegin + "." + tempEnd;
+                    }
+                    bienso = begin + "-" + end;
+                }
+
+                @bienso
+}</label>@*</span>*@
+                    <input @*value="@Model.LicensePlate"*@ id="editPlate" type="text" style="width: 100px; height: 20px; display: none;" name="newPlateNumber" />
+                    <input id="editPlateSubmit" type="submit" style="display: none" />
+                    @Html.Hidden("id", Model.TranId)
+                    @*@Html.Hidden("sid", sid)
+                        @Html.Hidden("act", "UpdatePlate")*@
+                </div>
+            }
+            @*</form>*@
+            <div style="float:right">
+                <a class="buttonPrint" style="text-decoration:none" target="_blank" href="@Url.Action("ExportReport", new { id = Model.TranId })"><b style="color:white">IN PHIẾU CÂN</b></a>
+            </div>
+        </div>
+        <table class="wimtable" style="margin-top: 20px; margin-bottom: 5%; width:600px">
+            <tr>
+                <th width="50">THÔNG SỐ</th>
+                <th width="50">GIÁ TRỊ</th>
+                <th width="50">THÔNG SỐ</th>
+                <th width="50">GIÁ TRỊ</th>
+            </tr>
+            <tbody>
+                <tr>
+                    <td width="50" style="text-align: left">Làn đường</td>
+                    <td width="50">@Html.DisplayFor(modelItem => Model.LaneCode)</td>
+                    <td width="50" style="text-align: left">Tổng tải trọng (Kg)</td>
+                    <td width="50">@Html.DisplayFor(modelItem => Model.GrossWeight)</td>
+                </tr>
+                <tr>
+                    <td width="50" style="text-align: left">Số trục</td>
+                    <td width="50">@Html.DisplayFor(modelItem => Model.AxlesCount)</td>
+                    <td width="50" style="text-align: left">Vận tốc (Km/h)</td>
+                    <td width="50">
+                        @{
+                            var dem = Model.Velocity.Value;
+                            var vantoc = Math.Round(dem, MidpointRounding.AwayFromZero);
+                            string temp1 = vantoc.ToString();
+                            @Html.DisplayFor(modelItem => temp1);
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td width="50" style="text-align: left">Chiều dài (m)</td>
+                    <td width="50">
+                        @{
+                            var dem1 = Model.VehicleLength.Value;
+                            var chieudai = Math.Round(dem1, MidpointRounding.AwayFromZero);
+                            string temp2 = chieudai.ToString();
+                            @Html.DisplayFor(modelItem => temp2);
+                        }
+                        
+                    </td>
+                    <td width="50" style="text-align: left">Cân đối trái phải (%)</td>
+                    @{
+                        double leftWeight = 0;
+                        double rightWeight = 0;
+                        if (Model.LeftWeight.HasValue)
+                        {
+                            leftWeight = Model.LeftWeight.Value;
+                        }
+                        if (Model.RightWeight.HasValue)
+                        {
+                            rightWeight = Model.RightWeight.Value;
+                        }
+                        double total = leftWeight + rightWeight;
+
+                        int leftPercent = (int)(leftWeight * 100 / total);
+                        int rightPercent = 100 - leftPercent;
+                    }
+                    <td width="20%">@leftPercent/@rightPercent</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="wimtable" style="margin-top: 150px; margin-bottom: 5%;width:600px">
+            <tr>
+                <th width="50">KC trục (m)</th>
+                <th width="50">TT trái (kg)</th>
+                <th width="50">TT phải (kg)</th>
+                <th width="50">Tổng TT (kg)</th>
+                <th width="50">Nhóm trục</th>
+                <th width="50">TT cho phép (kg)</th>
+                <th width="50">Tổng TT nhóm trục (kg)</th>
+                <th width="50">Quá tải (%)</th>
+            </tr>
+            <tbody>
+                @foreach (var item in @Model.Trans_RawAxles)
+                {
+                    string error = item.OverloadPercent > 0 ? "error" : "";
+                    <tr class="@error">
+                        <td>@Html.DisplayFor(modelItem => item.Distance)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LeftWeight)</td>
+                        <td>@Html.DisplayFor(modelItem => item.RightWeight)</td>
+                        <td>@Html.DisplayFor(modelItem => item.GrossWeight)</td>
+                        <td>@Html.DisplayFor(modelItem => item.AxleGroupId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LimitWeight)</td>
+                        @{var sum = Model.Trans_RawAxles.Where(w => w.AxleGroupId == item.AxleGroupId).Sum(s => s.GrossWeight).Value.ToString("#,#");}
+                        <td>@Html.DisplayFor(modelItem => sum)</td>
+                        <td>@Html.DisplayFor(modelItem => item.OverloadPercent)</td>
+                    </tr>
+                }
+                <tr>
+                    <td>Tổng cộng</td>
+                    <td>
+                        @{
+                            var SumParseLeft = Model.Trans_RawAxles.Sum(s => s.LeftWeight);
+                            var SumLeft = String.Format("{0:#,##0.##}", SumParseLeft);
+                            @Html.DisplayFor(modelItem => SumLeft)
+                        }                  
+                    </td>
+                    <td>
+                        @{
+                            var SumParseRight = Model.Trans_RawAxles.Sum(s => s.RightWeight);
+                            var SumRight = String.Format("{0:#,##0.##}", SumParseRight);
+                            @Html.DisplayFor(modelItem => SumRight)
+                        }               
+                    </td>
+                    <td>
+                        @{
+                            var SumParseGross = Model.Trans_RawAxles.Sum(s => s.GrossWeight);
+                            var SumGross = String.Format("{0:#,##0.##}", SumParseGross);
+                            @Html.DisplayFor(modelItem => SumGross)
+
+                        }                                    
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="float: right;margin-top:470px">
+            <p>
+                <canvas height="10" width="10" style="background-color: blue"></canvas>
+                <label class="noteGraph">Bình thường</label>
+                <canvas height="10" width="10" style="background-color: red"></canvas>
+                <label class="noteGraph">Quá tải</label>
+            </p>
+        </div>
+        <div class="axleschart" style="width: 490px;margin-top:60%" id="graphDiv1">
+            <canvas id="myCanvas" style="width: 100%; height : 100%"></canvas>
+
+            <script src="../../Scripts/html5-canvas-bar-graph.js"></script>
+            <script>
+                (function () {
+
+                    var lstAxle = JSON
+                        .parse('@Html.Raw(Json.Encode(@Model.Trans_RawAxles.OrderBy(s => s.AxleGroupId)
+                                                                           .ThenBy(t => t.Distance)
+                                                                           .Select(x => new { x.Distance, x.GrossWeight, x.OverloadStatus })
+                                                                           .ToList()))');
+                    var velen = '@Html.Raw(@Model.VehicleLength)';
+                    var len = lstAxle.length;
+                    //alert(len);
+                    //alert(velen);
+                    var maxlen = parseFloat(velen.replace(",", ".")) * 100;
+                    //var maxlen = velen * 100;
+                    //alert(maxlen);
+                    var i = 0;
+                    var values = [];
+                    var distance = [];
+                    var status = [];
+                    //var values = [700, 600, 90.90, 200.00];
+                    //var distance = [0, 200, 500, 100];
+                    for (var j = 0; j < lstAxle.length; j++) {
+                        distance[j] = lstAxle[j].Distance;
+                        values[j] = lstAxle[j].GrossWeight;
+                        status[j] = lstAxle[j].OverloadStatus;
+                    }
+                    //for (var j = 0; j < lstAxle.length; j++)
+                    //{
+                    //    if (distance[j] > distance[j + 1])
+                    //    {
+                    //        var tem = distance[j];
+                    //        distance[j] = distance[j + 1];
+                    //        distance[j + 1] = tem;
+                    //    }
+
+
+                    //}
+                    var xvalues = [];
+                    var gcolor = [];
+                    for (i = 0; i < maxlen; i += 1) {
+                        xvalues[i] = 0;
+                        gcolor[i] = "white";
+                    }
+                    var d = 100;
+                    for (i = 0; i < distance.length; i += 1) {
+                        d += parseFloat(distance[i]) * 100;
+                        xvalues[d] = values[i];
+                        if (parseInt(status[i]) === 0) {
+                            gcolor[d] = "blue";
+                        } else {
+                            gcolor[d] = "red";
+                        }
+                    }
+
+
+                    //var ctx = createCanvas("graphDiv1");
+                    //var hdiv = document.getElementById("graphDiv1").style.width;
+                    //alert(hdiv);
+                    var c = document.getElementById("myCanvas");
+                    var ctx = c.getContext("2d");
+
+                    var graph = new BarGraph(ctx);
+                    //graph.maxValue = maxlen;
+                    graph.margin = 0;
+
+                    graph.width = myCanvas.width;
+                    //graph.width = parseInt(hdiv) * 80 / 100;
+                    //alert(graph.width);
+                    graph.height = myCanvas.height;
+                    graph.colors = gcolor; //["#49a0d8", "#d353a0", "#ffc527", "#df4c27"];
+                    graph.baseDistance = 100;
+                    graph.distances = distance;
+                    //graph.xAxisLabelArr = ["North", "East", "West", "South"];
+                    //setInterval(function () {
+                    graph.update(xvalues);
+
+                }());
+            </script>
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+

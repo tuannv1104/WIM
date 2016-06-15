@@ -1,0 +1,328 @@
+﻿@model IEnumerable<WIM_MVC.Models.EntityFramework.Trans_VehicleInfo>
+
+<table class="wimtable" style="min-width:1150px">
+
+    <tr>
+        <th width="50">
+            @Resources.TableHeader.Detail
+        </th>
+        <th width="80">
+            @Resources.TableHeader.General_Lane
+        </th>
+        <th width="170">
+            @Resources.TableHeader.General_DateTime
+        </th>
+        <th width="50">
+            @Resources.TableHeader.General_VehicleType
+        </th>
+        <th width="100">
+            @Resources.TableHeader.General_PlateNumber
+        </th>
+        <th width="100">
+            @Resources.TableHeader.General_GrossWeight
+        </th>
+        <th width="100">
+            @Resources.TableHeader.General_GrossWeightAllowable
+        </th>
+        <th width="80">
+            @Resources.TableHeader.General_LeftRightBalance
+        </th>
+        <th width="100">
+            @Resources.TableHeader.General_Speed
+        </th>
+        <th width="50">
+            @Resources.TableHeader.General_NumberAxis
+        </th>
+        <th width="80">
+            @Resources.TableHeader.General_Length
+        </th>
+        <th width="50">
+            @Resources.TableHeader.General_PercentOverload
+        </th>
+        <th width="50" >
+            @Resources.TableHeader.OverLoadLevel
+        </th>
+
+    </tr>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            int status = 0;
+            if (item.OverloadStatus.HasValue)
+            {
+                status = item.OverloadStatus.Value;
+            }
+            if (status > 0)
+            {
+                <tr class="error">
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.TransactionId)
+                    </td>
+                    @*<td class="hidden">
+                            @Html.DisplayFor(modelItem => item.MetrologicalID)
+                        </td>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.Version)
+                        </td>*@
+
+                    <td><a onclick="clearTimer()" href="@Url.Action("Details", new { id = item.TranId, sid = ViewBag.SID})"><img src="~/Images/details.png" /></a></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LaneCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WeightBeginTime)
+                    </td>
+                    <td width="100">
+                        @{
+                string img = "~/Images/axles-" + item.AxlesCount.ToString() + ".png";
+                string imgW = item.AxlesCount == 7 ? "80"
+                            : item.AxlesCount == 6 ? "70"
+                            : item.AxlesCount == 5 ? "60"
+                            : item.AxlesCount == 4 ? "55"
+                            : item.AxlesCount == 3 ? "50"
+                                                    : "45";
+                        }
+                        <img width="@imgW" height="20" src="@Url.Content(img)" />
+                    </td>
+                    <td style="text-align: left; padding: 10px 10px 10px 10px">
+                        @{
+               
+                if (item.LicensePlate != null)
+                {
+                    string licensePlate = item.LicensePlate.Trim();
+                    string begin = null, end = null;
+                    int split = 0;
+                    if (licensePlate.Length > 3)
+                    {
+                        begin = licensePlate.Substring(0, 3);
+                        split = 3;
+                        end = licensePlate.Substring(split);
+
+                    }
+                    if (licensePlate.Length > 8)
+                    {
+                        begin = licensePlate.Substring(0, 4);
+                        split = 4;
+                    }
+                    if (licensePlate.Length > 7)
+                    {
+                        string temp = licensePlate.Substring(split);
+                        string tempBegin = temp.Substring(0, 3);
+                        string tempEnd = temp.Substring(3);
+                        end = tempBegin + "." + tempEnd;
+                    }
+                    if(licensePlate!="")
+                    {
+                        licensePlate = begin + "-" + end; 
+                    }
+                    
+                    @Html.DisplayFor(modelItem => licensePlate)
+                }
+                        }
+                    </td>
+                    <td style="text-align: right; padding: 10px 10px 10px 10px;">
+                        @{
+                var grossWeight = item.GrossWeight;
+                var value = String.Format("{0:#,##0.##}" + " kg", grossWeight);
+                @Html.DisplayFor(modelItem => value)
+                        }
+                    </td>
+                    <td style="text-align: right; padding: 10px 10px 10px 10px">
+                        @{var limitWeight = item.LimitWeight;
+                        var limitWeightFormat = String.Format("{0:#,##0.##}" + " kg", limitWeight);
+                        @Html.DisplayFor(modelItem => limitWeightFormat)}
+                    </td>
+                    @{
+                        double leftWeight = 0;
+                        double rightWeight = 0;
+                        if (item.LeftWeight.HasValue)
+                        {
+                            leftWeight = item.LeftWeight.Value;
+                        }
+                        if (item.RightWeight.HasValue)
+                        {
+                            rightWeight = item.RightWeight.Value;
+                        }
+                        double total = leftWeight + rightWeight;
+
+                        double leftPercent = Math.Round(leftWeight / total * 100);
+                        double rightPercent = 100 - leftPercent;
+
+                        <td>@leftPercent/@rightPercent</td>
+                    }
+                    <td>
+                        @{
+                        var v1 = item.Velocity;
+                        var v2 = string.Format("{0:0.00}" + " km/h", v1);
+                        @Html.DisplayFor(modelItem => v2)
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AxlesCount)
+                    </td>
+                    <td>
+                        @{
+                        var m1 = item.VehicleLength;
+                        var m2 = string.Format("{0:0.00}" + " m", m1);
+                        @Html.DisplayFor(modelItem => m2)
+                        }
+                    </td>
+                    <td style="text-align: right; padding: 10px 10px 10px 10px">
+                        @Html.DisplayFor(modelItem => item.OverloadPercent)
+                    </td>
+                    <td>
+                        @{
+
+                if (item.OverloadStatus == 1)
+                {
+                    string levelImg = item.OverloadPercent >= 50 ? "~/Images/overload_3.png" :
+                                      item.OverloadPercent <= 50 && item.OverloadPercent >= 10 ? "~/Images/overload_2.png" :
+                                      item.OverloadPercent <= 10 && item.OverloadPercent > 0 ? "~/Images/overload_1.png" : string.Empty;
+                    <img width="25" height="25" src="@Url.Content(levelImg)" />
+                }
+                        }
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.TransactionId)
+                    </td>
+                    @*<td class="hidden">
+                            @Html.DisplayFor(modelItem => item.MetrologicalID)
+                        </td>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.Version)
+                        </td>*@
+
+                    <td><a onclick="clearTimer()" href="@Url.Action("Details", new { id = item.TranId, sid = ViewBag.SID})"><img src="~/Images/details.png" /></a></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LaneCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WeightBeginTime)
+                    </td>
+                    <td width="100">
+                        @{
+                string img = "~/Images/axles-" + item.AxlesCount.ToString() + ".png";
+                string imgW = item.AxlesCount == 7 ? "80"
+                            : item.AxlesCount == 6 ? "70"
+                            : item.AxlesCount == 5 ? "60"
+                            : item.AxlesCount == 4 ? "55"
+                            : item.AxlesCount == 3 ? "50"
+                                                    : "45";
+                        }
+                        <img width="@imgW" height="20" src="@Url.Content(img)" />
+                    </td>
+
+                    <td style="text-align: left; padding: 10px 10px 10px 10px">
+                        @{
+                if (item.LicensePlate != null )
+                {
+                    string licensePlate = item.LicensePlate.Trim();
+                    string begin = null, end = null;
+                    int split = 0;
+                    if (licensePlate.Length > 3)
+                    {
+                        begin = licensePlate.Substring(0, 3);
+                        split = 3;
+                        end = licensePlate.Substring(split);
+
+                    }
+                    if (licensePlate.Length > 8)
+                    {
+                        begin = licensePlate.Substring(0, 4);
+                        split = 4;
+                    }
+                    if (licensePlate.Length > 7)
+                    {
+                        string temp = licensePlate.Substring(split);
+                        string tempBegin = temp.Substring(0, 3);
+                        string tempEnd = temp.Substring(3);
+                        end = tempBegin + "." + tempEnd;
+                    }
+                    if(licensePlate != "")
+                    {
+                        licensePlate = begin + "-" + end;
+                    }
+                    @Html.DisplayFor(modelItem => licensePlate)
+                }
+                        }
+                    </td>
+                    <td style="text-align: right; padding: 10px 10px 10px 10px">
+                        @{
+                var grossWeight = item.GrossWeight;
+                var value = String.Format("{0:#,##0.##}" + " kg", grossWeight);
+                @Html.DisplayFor(modelItem => value)
+                        }
+
+                    </td>
+                    <td style="text-align: right; padding: 10px 10px 10px 10px">
+                        @{
+                var limitWeight = item.LimitWeight;
+                var limitWeightFormat = String.Format("{0:#,##0.##}" + " kg", limitWeight);
+                @Html.DisplayFor(modelItem => limitWeightFormat)
+                        }
+                    </td>
+
+                    @{
+                double leftWeight = 0;
+                double rightWeight = 0;
+                if (item.LeftWeight.HasValue)
+                {
+                    leftWeight = item.LeftWeight.Value;
+                }
+                if (item.RightWeight.HasValue)
+                {
+                    rightWeight = item.RightWeight.Value;
+                }
+                double total = leftWeight + rightWeight;
+
+                double leftPercent = Math.Round(leftWeight * 100 / total);
+                double rightPercent = 100 - leftPercent;
+
+                <td>@leftPercent/@rightPercent</td>
+                    }
+
+                    <td>
+                        @{
+                var v1 = item.Velocity;
+                var v2 = string.Format("{0:0.00}" + " km/h", v1);
+                @Html.DisplayFor(modelItem => v2)
+                        }
+
+                    </td>
+                    <td style="text-align: right; padding: 10px 10px 10px 10px">
+                        @Html.DisplayFor(modelItem => item.AxlesCount)
+                    </td>
+                    <td>
+                        @{
+                var m1 = item.VehicleLength;
+                var m2 = string.Format("{0:0.00}" + " m", m1);
+                @Html.DisplayFor(modelItem => m2)
+                        }
+                    </td>
+                    <td style="text-align: right;padding: 10px 10px 10px 10px">
+                        @Html.DisplayFor(modelItem => item.OverloadPercent)
+                    </td>
+                    <td>
+                        @{
+                if (item.OverloadStatus == 1)
+                {
+                    string levelImg = item.OverloadPercent >= 50 ? "~/Images/overload_3.png" :
+                                      item.OverloadPercent <= 50 && item.OverloadPercent >= 10 ? "~/Images/overload_2.png" :
+                                      item.OverloadPercent <= 10 && item.OverloadPercent > 0 ? "~/Images/overload_1.png" : string.Empty;
+                    <img width="25" height="25" src="@Url.Content(levelImg)" />
+                }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
+

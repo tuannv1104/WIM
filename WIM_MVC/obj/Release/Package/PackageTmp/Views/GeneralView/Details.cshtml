@@ -1,0 +1,124 @@
+﻿@model WIM_MVC.Models.EntityFramework.Trans_VehicleInfo
+
+@{
+    ViewBag.Title = "XEM CHI TIẾT";
+}
+
+<h3>@ViewBag.Title</h3>
+
+<div id="detailBody">
+    <div id="leftContent">
+        <div>Show image</div>
+        <div>
+            <img class="colorImage" src="@Model." alt="Show color image of vehicle">
+        </div>
+    </div>
+    <div id="rightContent">
+        <table class="overloadWarning">
+            <tbody>
+            <tr>
+                <th style="width: 20px"><img src="~/Images/lamp.jpg" alt="Note" style="height: 19px; width: 19px"></th>
+                <td>
+                    Tổng trọng lượng quá tải: @Model.OverloadPercent % | Quá tải trục/cụm trục cao nhất: @(Model.Trans_RawAxles.Count > 0 ? @Model.Trans_RawAxles.OrderByDescending(o => o.OverloadPercent).FirstOrDefault().OverloadPercent : 0 )%
+                    @*Tổng trọng lượng quá tải: @Model.OverloadPercent % | Quá tải trục/cụm trục cao nhất: @Model.Trans_RawAxles.OrderByDescending(o => o.OverloadPercent).FirstOrDefault().OverloadPercent %*@
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div style="padding: 10px 0px 20px 0px">
+            <div class="col-md-4">
+                @Resources.TableHeader.General_PlateNumber: <span style="color: #007; font-weight:bold">@Model.LicensePlate</span>
+            </div>
+            <div style="float:right">
+                <a class="buttonPrint" target="_blank" href="@Url.Action("ExportReport", new { id = Model.TranId })">IN PHIẾU CÂN</a>
+            </div>
+        </div>
+        <table class="wimtable" style="margin-top: 12px; margin-bottom: 12px;">
+            <tr>
+                <th width="30%">THÔNG SỐ</th>
+                <th width="20%">GIÁ TRỊ</th>
+                <th width="30%">THÔNG SỐ</th>
+                <th width="20%">GIÁ TRỊ</th>
+            </tr>
+            <tbody>
+            <tr>
+                <td width="30%" style="text-align: left">Làn đường</td>
+                <td width="20%">@Html.DisplayFor(modelItem => Model.LaneCode)</td>
+                <td width="30%" style="text-align: left">Tổng tải trọng</td>
+                <td width="20%">@Html.DisplayFor(modelItem => Model.GrossWeight)</td>
+            </tr>
+            <tr>
+                <td width="30%" style="text-align: left">Số trục</td>
+                <td width="20%">@Html.DisplayFor(modelItem => Model.AxlesCount)</td>
+                <td width="30%" style="text-align: left">Vận tốc</td>
+                <td width="20%">@Html.DisplayFor(modelItem => Model.Velocity)</td>
+            </tr>
+            <tr>
+                <td width="30%" style="text-align: left">Chiều dài</td>
+                <td width="20%">@Html.DisplayFor(modelItem => Model.VehicleLength)</td>
+                <td width="30%" style="text-align: left">Cân đối trái phải</td>
+                @{
+                    double leftWeight = 0;
+                    double rightWeight = 0;
+                    if (Model.LeftWeight.HasValue)
+                    {
+                        leftWeight = Model.LeftWeight.Value;
+                    }
+                    if (Model.RightWeight.HasValue)
+                    {
+                        rightWeight = Model.RightWeight.Value;
+                    }
+                    double total = leftWeight + rightWeight;
+
+                    int leftPercent = (int)(leftWeight*100/total);
+                    int rightPercent = (int)(rightWeight*100/total);
+                }
+                <td width="20%">@leftPercent/@rightPercent</td>
+            </tr>
+            </tbody>
+        </table>
+        <table id="axles-info" class="wimtable" style="margin-top: 12px; margin-bottom: 12px">
+            <tr>
+                <th>KC trục(m)</th>
+                <th>TT trái(kg)</th>
+                <th>TT phải(kg)</th>
+                <th>Tổng TT(kg)</th>
+                <th>Nhóm trục</th>
+                <th>TT cho phép(kg)</th>
+                <th>Tổng TT nhóm trục(kg)</th>
+                <th>Quá tải(%)</th>
+            </tr>
+            <tbody>
+            @foreach (var item in @Model.Trans_RawAxles)
+            {
+                string error = item.OverloadPercent > 0 ? "error" : "";
+                <tr class="@error">
+                    <td>@Html.DisplayFor(modelItem => item.Distance)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LeftWeight)</td>
+                    <td>@Html.DisplayFor(modelItem => item.RightWeight)</td>
+                    <td>@Html.DisplayFor(modelItem => item.GrossWeight)</td>
+                    <td>@Html.DisplayFor(modelItem => item.AxleGroupId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LimitWeight)</td>
+                    @{var sum = Model.Trans_RawAxles.Where(w => w.AxleGroupId == item.AxleGroupId).Sum(s => s.GrossWeight);}
+                    <td>@Html.DisplayFor(modelItem => sum)</td>
+                    <td>@Html.DisplayFor(modelItem => item.OverloadPercent)</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2">Tổng cộng</td>
+                <td>@Model.Trans_RawAxles.Sum(s => s.LeftWeight)</td>
+                <td>@Model.Trans_RawAxles.Sum(s => s.RightWeight)</td>
+                <td>@Model.Trans_RawAxles.Sum(s => s.GrossWeight)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+

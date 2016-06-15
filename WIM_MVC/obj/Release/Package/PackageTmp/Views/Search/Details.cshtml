@@ -1,0 +1,298 @@
+﻿@model WIM_MVC.Models.EntityFramework.Trans_VehicleInfo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Trans_VehicleInfo</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MetrologicalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MetrologicalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Version)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Version)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTimeStr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTimeStr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LaneNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LaneNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ErrorFlag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ErrorFlag)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WarningFlag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WarningFlag)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ViolationFlag)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ViolationFlag)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direction)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoveStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoveStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FrontToFront)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FrontToFront)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BackToFront)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BackToFront)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleLength)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleLength)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GrossWeight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GrossWeight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LeftWeight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LeftWeight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RightWeight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RightWeight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Velocity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Velocity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WheelBase)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WheelBase)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AxlesCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AxlesCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MassUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MassUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VelocityUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VelocityUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DistanceUnit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DistanceUnit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.licensePlate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.licensePlate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UrlImagelicensePlate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UrlImagelicensePlate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UrlLaneImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UrlLaneImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ANPRTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ANPRTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OverloadPercent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OverloadPercent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Datalogger_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Datalogger_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VehicleType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LaneID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LaneID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FusionWarning)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FusionWarning)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VehicleID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

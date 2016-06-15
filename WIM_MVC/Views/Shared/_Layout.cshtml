@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - WIM Application</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap.css")
+    @Styles.Render("~/Content/wim.css")
+    @Styles.Render("~/Content/jquery-ui.css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/jquery-ui.js")
+    @Scripts.Render("~/bundles/modernizr")
+    
+    @RenderSection("head", required: false)
+</head>
+<body onload="startTime()" style="width:100%;position:absolute">
+    <div class="navbar navbar-fixed-top" style="height:50px;min-width:500px; background:#bbb; padding-left:15px; padding-right:15px;position:absolute">
+        <div style="float:left; padding-top:5px"><img src="~/Images/wimlogo.gif" style="width:80px; height:40px"></div>
+        <div>
+            <div style="color:#000088; font-size:12pt; font-weight:bold; margin-top:5px; margin-left:100px;">HỆ THỐNG CÂN ĐỘNG TẢI TRỌNG XE</div>
+            <div style="color:#444; font-size:9pt;font-weight:bold; margin-left:100px;">TRẠM CÂN QUỐC LỘ 20<span style="float:right;font-size:12pt" id="txt"></span></div>
+            
+        </div>
+    </div>
+
+    <div class="navbar navbar-inverse" style="height:50px">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                @{
+                    string ctrNameController = ViewContext.RouteData.Values["controller"].ToString();
+                    string ctrNameAction = ViewContext.RouteData.Values["action"].ToString();
+                }
+                <ul class="nav navbar-nav">
+                    <li @{if (ctrNameController == "Home") { <text> class="active" </text>  }}>@Html.ActionLink("TRANG CHỦ", "Index", "Home", routeValues: null, htmlAttributes: new { id = "HomeLink", @class = "lnkMenu" })</li>
+                    <li @{if (ctrNameController == "GeneralView" && ctrNameAction == "GeneralView") { <text> class="active" </text>   }}>@Html.ActionLink("XEM TỔNG QUAN", "GeneralView", "GeneralView", routeValues: null, htmlAttributes: new { id = "GeneralViewLink", @class = "lnkMenu" })</li>
+
+                    <li @{if (ctrNameController == "GeneralView" && ctrNameAction == "Details") { <text> class="active" </text>   }}>@Html.ActionLink("XEM CHI TIẾT", "Details", "GeneralView", routeValues: null, htmlAttributes: new { id = "DetailViewLink", @class = "lnkMenu" })</li>
+
+                    <li @{if (ctrNameController == "Search") { <text> class="active" </text>   }}>@Html.ActionLink("TRA CỨU", "Index", "Search", routeValues: null, htmlAttributes: new { id = "SearchViewLink", @class = "lnkMenu" })</li>
+
+                    <li @{if (ctrNameController == "Report") { <text> class="active" </text>   }}>@Html.ActionLink("BÁO CÁO THỐNG KÊ", "Index", "Report", routeValues: null, htmlAttributes: new { id = "ReportViewLink", @class = "lnkMenu" })</li>
+
+                    <li @{if (ctrNameController == "Account") { <text> class="active" </text>   }}>@Html.ActionLink("QUẢN TRỊ TÀI KHOẢN", "Index", "Account", routeValues: null, htmlAttributes: new { id = "UserManageLink", @class = "lnkMenu" })</li>
+
+                    <li @{if (ctrNameController == "SystemManage") { <text> class="active" </text>   }}>@Html.ActionLink("CẤU HÌNH HỆ THỐNG", "SystemConfigView", "SystemManage", routeValues: null, htmlAttributes: new { id = "ConfigViewLink", @class = "lnkMenu" })</li>
+
+                    @*<li class="dropdown">
+                    <a href="#" class="dropdown-toggle">QUẢN TRỊ HỆ THỐNG<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Cấu hình hệ thống", "SystemConfigView", "SystemManage", routeValues: null, htmlAttributes: new { id = "ConfigViewLink" })</li>
+                    </ul>
+                </li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    <footer class="navbar-fixed-bottom" id="footer" style="background:#bbb; color:#000;padding:2px">
+        <center>&copy; 2016 - WIM Application</center>
+    </footer>
+
+    <div class="overlay"></div>
+    <div class="waiting"></div>
+    <div class="messagebox">
+        <div style="background-color:#006; color:#fff; text-align:center; padding:4px">Thông báo</div>
+        <div style="width:100%; position:absolute; top:30px; bottom:38px; background-color:#fff">
+            <div class="col-md-2" style="margin: 20px 0px;"><img src="~/Images/Information.png" /></div>
+            <div class="col-md-10" style="margin: 20px 0px; font-size:1.5em; color:#f63" id="messageContent">Please put Message Here</div>
+        </div>
+        <div style="position:absolute; bottom:0; left:0; width:100%; padding:5px; text-align:center; background-color:#aaa; border-top:1px solid #888">
+            <button class="btn btn-default" onclick="closeMessageBox();">Đóng</button>
+        </div>
+    </div>
+
+    <div class="confirmbox">
+        <div style="background-color:#006; color:#fff; text-align:center; padding:4px">Xác nhận</div>
+        <div style="width:100%; position:absolute; top:30px; bottom:38px; background-color:#fff">
+            <div class="col-md-2" style="margin: 20px 0px;"><img src="~/Images/question-y.png" /></div>
+            <div class="col-md-10" style="margin: 20px 0px; font-size:1.5em; color:#f63" id="confirmContent">Please put Question Here</div>
+        </div>
+        <div style="position:absolute; bottom:0; left:0; width:100%; padding:2px; text-align:center; background-color:#aaa; border-top:1px solid #888">
+            <button id="btnConfirmOK" class="btn btn-default" ></button>
+            <button id="btnConfirmCancel" class="btn btn-default" onclick="closeConfirmBox();">Bỏ qua</button>
+        </div>
+    </div>
+
+    @RenderSection("scripts", required: false)
+    
+    <script type="text/javascript">
+    $(document).ready(function () {
+        
+
+        $('.dropdown-toggle').dropdown();
+
+        $('.lnkMenu').click(function () {
+            $('.overlay').show();
+            $('.waiting').show();
+        });
+
+        var aKey = 65, bKey = 66, cKey = 67, dKey = 68, eKey = 69, fKey = 70, gKey = 71, hKey = 72, iKey = 73, jKey = 74,
+            kKey = 75, lKey = 76, mKey = 77, nKey = 78, oKey = 79, pKey = 80, qKey = 81, rKey = 82, sKey = 83, tKey = 84,
+            uKey = 85, vKey = 86, wKey = 87, xKey = 88, yKey = 89, zKey = 90;
+        $(window).keydown(function (e) {
+            if (e.keyCode == qKey && e.ctrlKey) {
+                $('.overlay').show();
+                $('.waiting').show();
+                window.location.href = '@Url.Content("~/SystemManage/DBConfigLogin")';
+            }
+        });
+
+        var footertop = $('#footer').position().top;
+        if ($('#pdfContainer').length > 0) {
+            var pdfboxtop = $('#pdfContainer').position().top;
+            $('#pdfContainer').height(footertop - pdfboxtop - 10);
+        }
+
+        var tablescrolltop = $('#tablescroll').position().top;
+        $('#tablescroll').height(footertop - tablescrolltop - 20);
+    });
+
+    function addrowheader() {
+        if ($('.wimtable').length > 0) {
+            $('.wimtable tr:first th').eq(0).before('<th style="width:40px;background-color:#008;color:#fff">STT</th>');
+            var i = 1;
+            $('.wimtable tr:not(:first) td:first-child').each(function () {
+                $(this).before('<td style="width:40px;background-color:#aaaaaa;">' + i++ + '</td>');
+            });
+        }
+    }
+
+    function startTime() {
+        var now = new Date();
+        var day = checkTime(now.getDate());
+        var month = checkTime(now.getMonth() + 1);
+        var year = now.getFullYear();
+        var h = now.getHours();
+        var m = now.getMinutes();
+        var s = now.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        //    document.getElementById('txt').innerHTML =
+        //day + "" + month + "/" + year + h + ":" + m + ":" + s;
+
+        document.getElementById('txt').innerHTML =
+        day + "/" + month + "/" + year + "  " + h + ":" + m + ":" + s;
+        var t = setTimeout(startTime, 500);
+    }
+
+    function checkTime(i) {
+        if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+        return i;
+    }
+
+    function addrowheader(tableid) {
+        if ($('#'+tableid).length > 0) {
+            $('#'+ tableid + ' tr:first th').eq(0).before('<th style="width:40px;background-color:#008;color:#fff">STT</th>');
+            var i = 1;
+            $('#'+ tableid +' tr:not(:first) td:first-child').each(function () {
+                $(this).before('<td style="width:40px;background-color:#aaaaaa;">' + i++ + '</td>');
+            });
+        }
+    }
+
+    function showMessageBox(message) {
+        $('.overlay').show();
+        $('.messagebox').show();
+        $('#messageContent').html(message);
+    }
+
+    function closeMessageBox() {
+        $('.overlay').hide();
+        $('.messagebox').hide();
+    }
+
+    function showConfirmBox(message) {
+        $('.overlay').show();
+        $('.confirmbox').show();
+        $('#confirmContent').html(message);
+    }
+
+    function closeConfirmBox() {
+        $('.overlay').hide();
+        $('.confirmbox').hide();
+    }
+
+</script>
+
+</body>
+</html>

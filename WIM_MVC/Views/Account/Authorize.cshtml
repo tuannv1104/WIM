@@ -1,0 +1,96 @@
+﻿@model WIM_MVC.Models.EntityFramework.AspNetUser
+
+@{
+    ViewBag.Title = "Phân quền";
+}
+
+<h3>@ViewBag.Title</h3>
+
+@*<h4>AspNetUser</h4>*@
+<hr />
+<div class="col-md-5">
+    <dl class="dl-horizontal">
+        <dt>
+            @Resources.TableHeader.User_UserName
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            @Resources.TableHeader.User_LastName
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Resources.TableHeader.User_FirstName
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+    </dl>
+
+</div>
+
+@using (Html.BeginForm("Authorize", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+<div class="col-md-6">
+    <div class="col-md-6" style="border-left: 1px solid #808080">
+        <h4>Quyền truy cập trang</h4>
+            @foreach (var role in ViewBag.Roles)
+            {
+                if (role.Name.StartsWith("V"))
+                {
+                    bool found = false;
+                    foreach (var userrole in ViewBag.UserRoles)
+                    {
+                        if (userrole.Id == role.Id)
+                        {
+                            found = true;
+                            <div><input type="checkbox" name="selectedRole" value="@role.Name" checked style="margin:4px 10px">@role.Description</div>
+                        }
+                    }
+                    if (!found)
+                    {
+                        <div><input type="checkbox" name="selectedRole" value="@role.Name" style="margin:4px 10px">@role.Description</div>
+                    }
+                }
+            }
+    </div>
+    @*<div class="col-md-6" style="border-left: 1px solid #808080">
+        <h4>Chức năng</h4>
+            @foreach (var role in ViewBag.Roles)
+            {
+                if (role.Name.StartsWith("F"))
+                {
+                    bool found = false;
+                    foreach (var userrole in ViewBag.UserRoles)
+                    {
+                        if (userrole.Id == role.Id)
+                        {
+                            found = true;
+                            <div><input type="checkbox" name="selectedRole" value="@role.Name" checked style="margin:4px 10px">@role.Description</div>
+                        }
+                    }
+                    if (!found)
+                    {
+                        <div><input type="checkbox" name="selectedRole" value="@role.Name" style="margin:4px 10px">@role.Description</div>
+                    }
+                }
+            }
+    </div>*@
+
+    <div style="clear:both">
+        <input type="submit" value="Lưu" class="btn btn-default" />
+        @Html.ActionLink("Trở về", "Index")
+    </div>
+</div>
+
+}

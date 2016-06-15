@@ -1,0 +1,147 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<WIM_MVC.Models.EntityFramework.Trans_VehicleInfo>
+
+@section scripts
+{
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        var date = new Date();
+        date.setDate(date.getDate() - 1);
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                defaultDate: date,
+                format: 'DD/MM/YYYY HH:mm:ss'
+
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#datetimepicker2').datetimepicker({
+                defaultDate: Date.now(),
+                format: 'DD/MM/YYYY HH:mm:ss'
+            });
+        });
+        var submittime = Date.now();
+        function ajaxfail(objXHR, status, errorThrown)
+        {
+            var timeout = Date.now() - submittime;
+                if (submitcount <= 30000)
+                {
+                    $("#searchform").submit();
+                }
+                else
+                {
+                    submittime = now();
+                    $('.overlay').hide();
+                    $('.waiting').hide();
+                    window.location.href = "@Url.Action("ConnectionFailed", "Search")";
+                }
+        }
+        function ajaxsuccess()
+        {
+            $('.overlay').hide();
+            $('.waiting').hide();
+            submitcount = 0;
+            addrowheader();
+        }
+        function btnsearchclick() {
+                $('.overlay').show();
+                $('.waiting').show();
+                timeout = 0;
+            };
+        
+    </script>
+
+    <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+}
+
+
+
+
+@{
+    ViewBag.Title = "TRA CỨU";
+}
+<h3>@ViewBag.Title</h3>
+@using (Ajax.BeginForm("Search", "Search", new AjaxOptions
+                                                {
+                                                    HttpMethod = "Post",
+                                                    UpdateTargetId = "divTransaction",
+                                                    OnSuccess = "ajaxsuccess",
+                                                    OnFailure = "ajaxfail"
+                                                }
+                                          , new { id = "searchform"}))
+{
+    <div>
+        <table style="margin-right:auto;margin-left:auto">
+            <tr>
+                <th style="font-size:12px">Mức độ vi phạm:</th>
+                <th style="font-size:12px">Làn số:</th>
+                <th style="font-size:12px">Từ ngày:</th>
+                <th style="font-size:12px">Đến ngày:</th>
+                <th style="font-size:12px">Số trục</th>
+                <th style="font-size:12px">Số xe</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td width="10%" style="font-size:12px;vertical-align:top">
+                    @Html.DropDownList("ViolateLevel", null, new { style = "height:34px" })
+                </td>
+                <td width="8%" style="font-size:12px;vertical-align:top">   
+                    @Html.DropDownList("LaneItems", null, new { style = "height:34px" })
+                </td>
+                <td width="24%" style="font-size:12px">
+                    <!-- Examples of creating a Datepicker -->
+                    @*<div class="container">
+                        <div class="col-md-10">
+                            <div class='well'>*@
+                                        <div class="form-group">
+                                            <div class='input-group date' id='datetimepicker1'>
+                                                <input type='text' class="form-control" name="fromDate" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @*</div>
+                            </div>
+                        </div>*@
+                </td>
+                <td width="24%">
+                    <!-- Examples of creating a Datepicker -->
+                    @*<div class="container">
+                        <div class="col-md-10">
+                            <div class='well'>*@
+                                        <div class="form-group">
+                                            <div class='input-group date' id='datetimepicker2'>
+                                                <input type='text' class="form-control" name="toDate"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                @*</div>
+                            </div>
+                        </div>*@
+                </td>
+                <td width="10%" style="font-size:12px;vertical-align:top">
+                    @Html.DropDownList("Axles", null, new { style = "height:34px" })
+                </td>
+                <td width="14%" style="font-size:12px;vertical-align:top">
+                    <input style="height:34px" type="text" name="plateNumber"/>
+                </td>
+                <td width="10%" style="font-size:12px;vertical-align:top" align="center">
+                    <input style="height:34px" onclick="btnsearchclick()" id="btnSearch" type="submit" value="Lọc" class="btn btn-default" />
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+
+
+<div class="tableheader" id="divTransaction" style="margin-bottom:10%">
+    @{Html.RenderPartial("_TransactionTable", Model);}
+</div>

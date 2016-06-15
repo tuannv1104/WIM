@@ -1,0 +1,62 @@
+﻿@*@model IEnumerable<WIM_MVC.Models.EntityFramework.Trans_VehicleInfo>*@
+
+@{
+    ViewBag.Title = "XEM TỔNG QUAN";
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+    </script>
+    <script type="text/javascript">
+        var timer;
+        function getTrans() {
+            var url = '@Url.Action("GeneralAuto", "GeneralView")';
+            var ddlLane = document.getElementById("ddlLane");
+            var lane = ddlLane.value;
+            var ddlRaw = document.getElementById("ddlRaw");
+            var raw = ddlRaw.value;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    lane: lane,
+                    raw: raw
+                },
+                success: function (result) {
+                    $("#dvTrans").html(result);
+                    addrowheader();
+                }
+            })
+            var ddlTime = document.getElementById("ddlTime");
+            var interval = 1000 * parseInt(ddlTime.value);
+            timer = setTimeout(getTrans, interval);
+        };
+        $(document).ready(function () {
+            getTrans();
+        });
+        function clearTimer()
+        {
+            clearTimeout(timer);
+        }
+    </script>
+}
+
+<h3>@ViewBag.Title</h3>
+<div style="margin-bottom:12px">
+    <table>
+        <tr>
+            <td style="font-size:12px;width:300px">Thời gian làm mới: @Html.DropDownList("RefreshTime", null, new { id = "ddlTime"})s</td>
+            <td style="font-size: 12px; width: 300px">Làn số: @Html.DropDownList("Lane", null, new { id = "ddlLane" })</td>
+            <td style="font-size: 12px; width: 300px">Số dòng hiển thị: @Html.DropDownList("DisplayRaw", null, new { id = "ddlRaw" })</td>
+            @*<td style="font-size:12px">Cảnh báo âm thanh: @Html.RadioButton("IsWarningSound", "Sound", false)</td>*@
+        </tr>
+    </table>
+</div>
+
+<div class="tableheader" id="dvTrans">
+    
+</div>
+
+
+

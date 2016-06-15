@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "AuthorizeFailed";
+}
+
+
+<div class="col-md-2">&nbsp;</div>
+<div class="col-md-9">
+    <div class="col-md-2" style="margin:30px 0px"><img src="~/Images/forbidden_64p.png"></div>
+    <div class="col-md-7">
+        <h3>Lỗi truy cập</h3>
+        @ViewData["Message"]
+
+        <div style="clear:both; margin:40px 0px;">
+            @*@Html.ActionLink("Trở về", "Index", "Home")*@
+            @Html.ActionLink("Trở về", null, null, null, new { href = Request.UrlReferrer })
+        </div>
+
+    </div>
+</div>
+<div class="col-md-2">&nbsp;</div>
+

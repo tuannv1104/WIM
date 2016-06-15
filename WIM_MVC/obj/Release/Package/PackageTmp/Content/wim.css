@@ -1,0 +1,268 @@
+﻿  .overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(51,51,51,0.3);
+    z-index: 99999;
+    display: none;
+  }
+
+.messagebox {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+    border: 1px solid #ccc;
+    background-color: #f3f3f3;
+    z-index:100000;
+    display: none;
+}
+
+.view-caption{
+    color:#008;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.wim-grad1{
+    background: -webkit-radial-gradient(white, cyan, blue); /* For Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(white, cyan, blue); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(white, cyan, blue); /* For Fx 3.6 to 15 */
+    background: radial-gradient(white, cyan, blue); /* Standard syntax (must be last) */
+}
+
+.wim-grad2 {
+  background: white; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left,rgba(0,0,255,0),rgba(0,0,255,1)); /*Safari 5.1-6*/
+  background: -o-linear-gradient(right,rgba(0,0,255,0),rgba(0,0,255,1)); /*Opera 11.1-12*/
+  background: -moz-linear-gradient(right,rgba(0,0,255,0),rgba(0,0,255,1)); /*Fx 3.6-15*/
+  background: linear-gradient(to right, rgba(0,0,255,0), rgba(0,0,255,1)); /*Standard*/
+} 
+
+.wim-grad3 {
+  background: white; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left top, white, blue); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, white, blue); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, white, blue); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, white, blue); /* Standard syntax */
+} 
+
+.clock{
+    background-color: transparent;
+    /*border-radius: 10px;*/
+    float: right;
+    margin: 20px 20px;
+    padding: 8px;
+    font-size: 1em;
+    /*font-weight: bold;*/
+    color: #222222;
+    text-align: center;
+}
+
+#point {
+    -moz-animation: mymove 1s ease infinite;
+    -webkit-animation: mymove 1s ease infinite;
+} 
+
+    @-webkit-keyframes mymove {
+        0% {
+            opacity: 1.0;
+            text-shadow: 0 0 20px #00c6ff;
+        }
+        50% {
+            opacity: 0;
+            text-shadow: none;
+        }
+        100% {
+            opacity: 1.0;
+            text-shadow: 0 0 20px #00c6ff;
+        }	
+    }
+
+    @-moz-keyframes mymove {
+        0% {
+            opacity: 1.0;
+            text-shadow: 0 0 20px #00c6ff;
+        }
+        50% {
+            opacity: 0;
+            text-shadow: none;
+        }
+        100% {
+            opacity: 1.0;
+            text-shadow: 0 0 20px #00c6ff;
+        }
+    }        
+    
+
+.wimtable{
+    width:100%;
+    border-collapse:collapse;
+    font-size:0.9em;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.wimtable td{
+    padding: 2px;
+    border:#4e95f4 1px solid;
+    text-align:center;
+}
+
+.wimtable tr{
+    background:#b8d1f3;
+}
+
+.wimtable tr:nth-child(2n+1){
+    background:#b8d1f3;
+}
+
+.wimtable tr:nth-child(2n){
+    background:#dae5f4;
+}
+
+.wimtable tr.error{
+    color:#fff;
+    background:#ff6a00;
+}
+
+.wimtable tr.selected{
+    color:#222222;
+    background-color: #ffff44;
+}
+
+.wimtable tr:hover {
+    color:#222222;
+    background-color: #ffff99;
+}
+
+.wimtable th{
+    padding: 5px;
+    border:#4e95f4 1px solid;
+    color:#fff;
+    font-size:1em;
+    font-weight:normal;
+    background:#008;
+    text-align:center;
+}
+
+div .tableheader{
+    margin: 0px;
+    padding: 0px 20px 0px 0px;
+    overflow:hidden;
+}
+
+div .tablescroll{
+    height:300px; 
+    overflow:scroll; 
+    margin:0px; 
+    padding:0px;
+}
+
+.hidden{
+    display:none;
+}
+
+/*View Detail*/
+#leftContent {
+    width:50%;
+    float:left;
+    padding:5px; 
+}
+
+#rightContent {
+    height:300px;
+    width:50%;
+    float:right;
+    padding:5px; 
+}
+
+.buttonPrint{
+    background-color:#007;
+    padding:5px;
+    color: #999999;
+    font-size: 12px;
+    /*margin-left:390px;*/
+    /*float:right;*/
+}
+/* End View Detail*/
+
+
+a.rowedit{
+    background: url(../Images/pencil3.png) no-repeat top left;
+    float:left;
+    margin: 0px 5px;
+     display: block;
+     width: 16px;
+     height: 16px;
+     /*text-indent: -9999px;*/ /* hides the link text */
+}
+
+a.rowdetails{
+    background: url(../Images/details.png) no-repeat top left;
+    float:left;
+    margin: 0px 5px;
+     display: block;
+     width: 16px;
+     height: 16px;
+     /*text-indent: -9999px;*/ /* hides the link text */
+}
+
+a.rowdelete{
+    background: url(../Images/recycle.png) no-repeat top left;
+    float:left;
+    margin: 0px 5px;
+     display: block;
+     width: 16px;
+     height: 16px;
+     /*text-indent: -9999px;*/ /* hides the link text */
+}
+
+a.rowchangepassword{
+    background: url(../Images/change_password.png) no-repeat top left;
+    float:left;
+    margin: 0px 5px;
+     display: block;
+     width: 16px;
+     height: 16px;
+     /*text-indent: -9999px;*/ /* hides the link text */
+}
+
+a.rowauthorize{
+    background: url(../Images/authorize.png) no-repeat top left;
+    float:left;
+    margin: 0px 5px;
+     display: block;
+     width: 16px;
+     height: 16px;
+     /*text-indent: -2000px;*/ /* hides the link text */
+}
+
+ul.checked{
+    list-style-image: url(../Images/ok-16.png);
+}
+
+ul.nochecked{
+    list-style-image: url(../Images/ko-16.png);
+}
+
+ul li.hasrole { 
+    list-style:none;
+    background:url(../Images/tick_16.png) no-repeat 0 4px;
+    padding: 1px 0px 4px 25px;
+}
+
+ul li.nohasrole { 
+    list-style:none;
+    background:url(../Images/forbidden.png) no-repeat 0 4px;
+    padding: 1px 0px 4px 25px;
+}
+
+.basewimtable
+{
+}

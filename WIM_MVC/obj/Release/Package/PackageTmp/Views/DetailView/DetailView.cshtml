@@ -1,0 +1,45 @@
+﻿@model WIM_MVC.Models.EntityFramework.Trans_VehicleInfo
+
+@{
+    ViewBag.Title = "XEM CHI TIẾT";
+}
+
+<h3>@ViewBag.Title</h3>
+
+<div id="detailBody">
+    <div id="leftContent">
+        <div>Show image</div>
+        <div>
+            <img class="colorImage" src="url" alt="Show color image of vehicle">
+        </div>
+    </div>
+    <div id="rightContent">
+        <table class="overloadWarning">
+            <tbody>
+                <tr>
+                    <th style="width:20px"><img src="~/Images/lamp.jpg" alt="Note" style="height:19px;width:19px"></th>
+                    <td>
+                        Tổng trọng lượng quá tải: |Quá tải trục/cụm trục cao nhất:
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="margin:10px">
+            <tr>
+                <td >
+                    <div>@Resources.TableHeader.General_PlateNumber: <strong style="color:#007">78H70002</strong></div>
+                </td>
+                <td>
+                    <div class="buttonPrint">IN PHIẾU CÂN</div>
+                </td>
+            </tr>
+        </table>
+
+        <table class="informtion">
+
+        </table>
+        
+    </div>
+
+</div>
+

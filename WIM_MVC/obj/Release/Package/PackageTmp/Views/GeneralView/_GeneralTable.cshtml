@@ -1,0 +1,191 @@
+﻿@model IEnumerable<WIM_MVC.Models.EntityFramework.Trans_VehicleInfo>
+
+<table class="wimtable">
+
+    <tr>
+        <th width="80">
+            @Resources.TableHeader.Detail
+        </th>
+        <th width="80">
+            @Resources.TableHeader.General_Lane
+        </th>
+        <th width="170">
+            @Resources.TableHeader.General_DateTime
+        </th>
+        <th width="150">
+            @Resources.TableHeader.General_VehicleType
+        </th>
+        <th width="150">
+            @Resources.TableHeader.General_PlateNumber
+        </th>
+        <th width="80">
+            @Resources.TableHeader.General_GrossWeight
+        </th>
+        <th width="80">
+            @Resources.TableHeader.General_GrossWeightAllowable
+        </th>
+        <th width="80">
+            @Resources.TableHeader.General_LeftRightBalance
+        </th>
+        <th>
+            @Resources.TableHeader.General_Speed
+        </th>
+        <th>
+            @Resources.TableHeader.General_NumberAxis
+        </th>
+        <th width="80">
+            @Resources.TableHeader.General_Length
+        </th>
+        <th>
+            @Resources.TableHeader.General_PercentOverload
+        </th>
+
+    </tr>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            int status = 0;
+            if (item.OverloadStatus.HasValue)
+            {
+                status = item.OverloadStatus.Value;
+            }
+            if (status > 0)
+            {
+                <tr class="error">
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.TransactionId)
+                    </td>
+                    @*<td class="hidden">
+                            @Html.DisplayFor(modelItem => item.MetrologicalID)
+                        </td>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.Version)
+                        </td>*@
+
+                    <td><a onclick="clearTimer()" href="@Url.Action("Details", new { id = item.TranId})"><img src="~/Images/details.png" /></a></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LaneCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WeightBeginTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleTypeCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicensePlate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GrossWeight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LimitWeight)
+                    </td>
+
+                    @{
+                double leftWeight = 0;
+                double rightWeight = 0;
+                if (item.LeftWeight.HasValue)
+                {
+                    leftWeight = item.LeftWeight.Value;
+                }
+                if (item.RightWeight.HasValue)
+                {
+                    rightWeight = item.RightWeight.Value;
+                }
+                double total = leftWeight + rightWeight;
+
+                double leftPercent = Math.Round(leftWeight * 100 / total);
+                double rightPercent = 100 - leftPercent;
+
+                <td>@leftPercent/@rightPercent</td>
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Velocity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AxlesCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleLength)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OverloadPercent)
+                    </td>
+
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td class="hidden">
+                        @Html.DisplayFor(modelItem => item.TransactionId)
+                    </td>
+                    @*<td class="hidden">
+                            @Html.DisplayFor(modelItem => item.MetrologicalID)
+                        </td>
+                        <td class="hidden">
+                            @Html.DisplayFor(modelItem => item.Version)
+                        </td>*@
+
+                    <td><a onclick="clearTimer()" href="@Url.Action("Details", new { id = item.TranId})"><img src="~/Images/details.png" /></a></td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LaneCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WeightBeginTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleTypeCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LicensePlate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GrossWeight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LimitWeight)
+                    </td>
+
+                    @{
+                double leftWeight = 0;
+                double rightWeight = 0;
+                if (item.LeftWeight.HasValue)
+                {
+                    leftWeight = item.LeftWeight.Value;
+                }
+                if (item.RightWeight.HasValue)
+                {
+                    rightWeight = item.RightWeight.Value;
+                }
+                double total = leftWeight + rightWeight;
+
+                double leftPercent = leftWeight * 100 / total;
+                double rightPercent = rightWeight * 100 / total;
+
+                <td>@leftPercent/@rightPercent</td>
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Velocity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AxlesCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.VehicleLength)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OverloadPercent)
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+
+</table>
+

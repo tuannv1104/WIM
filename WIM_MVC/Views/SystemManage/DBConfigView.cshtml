@@ -1,0 +1,83 @@
+﻿@model WIM_MVC.Models.DBConfigModels
+
+@{
+    ViewBag.Title = "CẤU HÌNH HỆ THỐNG";
+}
+
+<h3>@ViewBag.Title</h3>
+
+<section id="sytemConfigForm">
+    @using (Html.BeginForm("DBConfigView", "SystemManage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <hr />
+        <fieldset>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DBServer, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.DBServer, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DBServer)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DBDatabase, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.DBDatabase, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DBDatabase)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DBUserName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.DBUserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DBUserName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.DBPassword, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.DBPassword, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.DBPassword)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <span><input type="submit" value="Kiểm tra kết nối" name="TestConnection" class="btn btn-default" /></span>
+                    <span><input type="submit" value="Lưu" name="Save" class="btn btn-default" /></span>
+                </div>
+
+                <div class="col-md-offset-2 col-md-10">
+                    <span style="color:green; font-weight:bold">
+                        @if (!string.IsNullOrWhiteSpace(ViewBag.SuccessMessage))
+                        {
+                            @ViewBag.SuccessMessage
+                        }
+                    </span>
+                    <span style="color:red; font-weight:bold">
+                        @if (!string.IsNullOrWhiteSpace(ViewBag.ConnectionErrorMessage))
+                        {
+                            @ViewBag.ConnectionErrorMessage
+                        }
+                    </span>
+                    <span style="color:red; font-weight:bold">
+                        @if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMessage))
+                        {
+                            @ViewBag.ErrorMessage
+                        }
+                    </span>
+                </div>
+            </div>
+
+        </fieldset>
+    }
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,105 @@
+﻿@model WIM_MVC.Models.EntityFramework.AspNetUser
+
+@{
+    ViewBag.Title = "Chi tiết tài khoản";
+}
+
+<h3>@ViewBag.Title</h3>
+
+    @*<h4>AspNetUser</h4>*@
+    <hr />
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            <dt>
+                @Resources.TableHeader.User_UserName
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+
+            <dt>
+                @Resources.TableHeader.User_LastName
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Resources.TableHeader.User_FirstName
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+
+            <dt>&nbsp;</dt>
+            <dd>&nbsp;</dd>
+            <dt>&nbsp;</dt>
+            <dd>
+                @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Trở về", "Index")
+            </dd>
+        </dl>
+
+    </div>
+
+<div class="col-md-6">
+    <div class="col-md-6" style="border-left: 1px solid #808080">
+    <h4>Quyền truy cập trang</h4>
+        <ul>
+            @foreach (var role in ViewBag.Roles)
+            {
+                if (role.Name.StartsWith("V"))
+                {
+                    bool found = false;
+                    foreach (var userrole in ViewBag.UserRoles)
+                    {
+                        if (userrole.Id == role.Id)
+                        {
+                            found = true;
+                            <li class="hasrole">@role.Description</li>
+                        }
+                    }
+                    if (!found)
+                    {
+                            <li class="nohasrole">@role.Description</li>                        
+                    }
+                }
+            }
+        </ul>
+    </div>
+    @*<div class="col-md-6" style="border-left: 1px solid #808080">
+        <h4>Chức năng</h4>
+        <ul>
+            @foreach (var role in ViewBag.Roles)
+            {
+                if (role.Name.StartsWith("F"))
+                {
+                    bool found = false;
+                    foreach (var userrole in ViewBag.UserRoles)
+                    {
+                        if (userrole.Id == role.Id)
+                        {
+                            found = true;
+                            <li class="hasrole">@role.Description</li>
+                        }
+                    }
+                    if (!found)
+                    {
+                            <li class="nohasrole">@role.Description</li>                        
+                    }
+                }
+            }
+        </ul>
+    </div>*@
+
+    <div style="clear:both">
+        @Html.ActionLink("Phân quyền", "Authorize", new { id = Model.Id }) |
+        @Html.ActionLink("Trở về", "Index")
+    </div>
+
+</div>
+
+
